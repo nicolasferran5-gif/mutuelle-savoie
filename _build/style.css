@@ -339,3 +339,58 @@ tr:last-child td{border-bottom:0}
 
 /* Affiches : textes plus longs que sur les autres sites */
 .poster .b{font-size:1.8rem}.poster .sc{font-size:1.5rem}.poster .c{font-size:1.6rem}
+
+@font-face{font-family:"Big Shoulders Display";font-weight:800;font-display:swap;src:url("fonts/big-shoulders-display-latin-800-normal.woff2") format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-weight:900;font-display:swap;src:url("fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2")}
+/* ===== Bonne Cordée : thème « affiche de station » =====
+   Aplats de couleur des affiches de ski des années 1930, typographie condensée, skis croisés, crêtes en transition. */
+:root{--f-slab:"Big Shoulders Display","Arial Narrow",system-ui,sans-serif;--f-cond:"Big Shoulders Display","Arial Narrow",system-ui,sans-serif;--night:#12305A;--sky:#4B83C3;--sun:#F4B942;--snow:#F5F8FB}
+.t-label,.hero .kicker,.poster .s,.poster .go,.crumb{text-transform:none!important;letter-spacing:.02em!important}
+.t-label{font:800 1.15rem/1.2 var(--f-cond)!important;color:var(--red)}
+.on-navy .t-label{color:var(--sun)}
+h2{font-family:var(--f-slab)!important;font-weight:900!important;letter-spacing:-.005em}
+.sec-head h2{font-size:clamp(2.2rem,4.6vw,3.4rem);line-height:1}
+.rule h3{font-family:var(--f-slab);font-weight:800;font-size:1.5rem;line-height:1.05}
+.rule .num{font-family:var(--f-slab);font-weight:900}
+
+/* Hero : ciel en bandes, soleil, montagnes, télésiège */
+.hero.hero-alp{background:linear-gradient(180deg,var(--night) 0 30%,#1D4677 30% 48%,#2D5F96 48% 62%,var(--sky) 62% 100%);color:var(--snow)}
+.hero.hero-alp::before,.hero.hero-alp::after{display:none}
+.alp-scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:400px;pointer-events:none}
+.hero.hero-alp .wrap{padding-block:56px 400px}
+.alp-skis{width:110px;height:104px;margin:0 0 4px -6px;transform-origin:50% 60%}
+@media (prefers-reduced-motion:no-preference){.alp-skis{animation:skis-in .9s cubic-bezier(.2,.8,.2,1) both}@keyframes skis-in{from{transform:translateY(-14px) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}}
+.hero.hero-alp .kicker{background:var(--red);color:var(--snow);font:800 1.15rem/1 var(--f-cond);padding:9px 14px}
+.hero.hero-alp .l1{color:#C9DAEE;font:600 1.02rem/1.5 var(--f-body);letter-spacing:0;text-transform:none}
+.hero.hero-alp .l2{color:var(--snow);font:900 clamp(3rem,7vw,5.4rem)/.9 var(--f-slab);letter-spacing:-.01em;text-transform:uppercase}
+.hero.hero-alp .l3{color:var(--sun);font:800 clamp(1.7rem,3vw,2.4rem)/1.05 var(--f-slab)}
+.hero.hero-alp .hero-lead{color:#E3ECF6}
+.hero.hero-alp .hero-proofs li{color:var(--snow)}
+.hero.hero-alp .hero-proofs svg{color:var(--sun)!important}
+.hero.hero-alp .lead-card,.hero.hero-alp form{position:relative;z-index:2}
+
+/* Pages intérieures : titre en affiche + crête de montagne en pied */
+.page-hero{position:relative;padding-bottom:110px}
+.page-hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:70px;background:var(--cream);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 70' preserveAspectRatio='none'%3E%3Cpath d='M0 70L130 26l80 28 120-46 100 34 140-40 110 38 130-32 120 28 150-38 120 34 130-24 110 36V70Z'/%3E%3C/svg%3E") bottom/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 70' preserveAspectRatio='none'%3E%3Cpath d='M0 70L130 26l80 28 120-46 100 34 140-40 110 38 130-32 120 28 150-38 120 34 130-24 110 36V70Z'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
+.page-hero h1{font:900 clamp(3rem,7vw,5.6rem)/.9 var(--f-slab);text-transform:uppercase;letter-spacing:-.005em}
+.page-hero .sub{font:800 clamp(1.8rem,3.4vw,2.6rem)/1.05 var(--f-slab)}
+.page-hero.bg-navy{background:linear-gradient(180deg,var(--night) 0 55%,#1D4677 55% 100%)}
+.page-hero .ill-photo{border-radius:200px 200px 24px 24px;border:6px solid var(--snow)}
+
+/* Bandes nuit : une crête de neige en haut */
+.band.bg-navy{position:relative;background:var(--night)}
+.band.bg-navy::before{content:"";position:absolute;left:0;right:0;top:-1px;height:46px;background:var(--cream);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 46' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V20L1320 40 1190 16 1060 38 920 10 800 34 660 12 520 40 400 14 260 36 140 12 0 32Z'/%3E%3C/svg%3E") top/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 46' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V20L1320 40 1190 16 1060 38 920 10 800 34 660 12 520 40 400 14 260 36 140 12 0 32Z'/%3E%3C/svg%3E") top/100% 100% no-repeat}
+.band.bg-navy{padding-top:120px}
+
+/* Affiches métiers : soleil derrière l'illustration */
+.poster{border-radius:14px;position:relative;overflow:hidden}
+.poster .ill{width:104px;height:104px;background:var(--sun);box-shadow:0 0 0 10px rgba(244,185,66,.25)}
+.poster .b,.poster .c,.poster .sc{font-family:var(--f-slab);text-transform:uppercase;font-weight:900}
+.poster::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:rgba(245,248,251,.16);clip-path:polygon(0 60%,18% 20%,32% 50%,52% 0,70% 45%,84% 22%,100% 55%,100% 100%,0 100%);pointer-events:none}
+.poster .go{position:relative;z-index:1}
+
+@media (max-width:900px){
+  .hero.hero-alp .wrap{padding-block:36px 190px}
+  .alp-scene{height:230px}
+  .alp-skis{width:100px;height:100px}
+}

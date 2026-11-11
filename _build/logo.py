@@ -1,4 +1,4 @@
-"""Logo Bonne Cordée : un sommet enneigé protégé par un arc (le contrat), avec la croix blanche sur fond rouge de la Savoie en étincelle.
+"""Logo Bonne Cordée : deux skis croisés vus de profil (spatules recourbées), l'un rouge Savoie, l'autre blanc neige, et un petit drapeau de la Savoie (croix blanche sur fond rouge).
 Les noms de constantes reprennent ceux du moteur commun (COBALT = couleur principale, AMBER = accent, etc.)."""
 COBALT = "#C8102E"   # rouge Savoie
 PAPER = "#F7F9FB"
@@ -6,16 +6,25 @@ INK = "#1B2A41"
 AMBER = "#2F5D50"    # vert sapin
 AMBER_D = "#22463C"
 SKY = "#DCE8F2"
+SUN = "#F2D27A"
+
+
+def _ski(angle, fill, line, flip=False):
+    # un ski vu de profil : planche fine, spatule recourbée en crochet, talon arrondi, fixation
+    sx = -1 if flip else 1
+    return (f'<g transform="rotate({angle} 32 33) translate(32 0) scale({sx} 1) translate(-29.8 0)">'
+            f'<path d="M30 58V17C30 9 26 4.5 20.5 4.8c-1.6.1-1.9 2-.4 2.4C24 8.4 25.6 12 25.6 17V58c0 1.6 4.4 1.6 4.4 0Z" '
+            f'fill="{fill}" stroke="{line}" stroke-width="1.5" stroke-linejoin="round"/>'
+            f'<rect x="30" y="41" width="4.2" height="8" rx="1.2" fill="{line}"/>'
+            f'<path d="M30 45h4.2" stroke="{fill}" stroke-width="1.2"/></g>')
 
 
 def mark_inner(dark=False):
     line = PAPER if dark else INK
     return (
-        f'<path d="M6 30C6 15 17 4 32 4s26 11 26 26" fill="none" stroke="{COBALT}" stroke-width="3.4" stroke-linecap="round"/>'
-        f'<path d="M10 54L27 22l8 13 6-8 13 27Z" fill="{SKY}" stroke="{line}" stroke-width="2.6" stroke-linejoin="round"/>'
-        f'<path d="M21 33l6-11 6 10-3 3-3-3-3 3Z" fill="{PAPER}" stroke="{line}" stroke-width="2.2" stroke-linejoin="round"/>'
-        f'<rect x="45" y="3" width="11" height="11" rx="2" fill="{COBALT}"/>'
-        f'<path d="M50.5 5.5v6M47.5 8.5h6" stroke="{PAPER}" stroke-width="2" stroke-linecap="round"/>'
+        _ski(-24, COBALT, line) + _ski(24, SKY if not dark else PAPER, line, flip=True) +
+        f'<rect x="45" y="1.5" width="12" height="12" rx="2.5" fill="{COBALT}" stroke="{line}" stroke-width="1.3"/>'
+        f'<path d="M51 3.5v8M47 7.5h8" stroke="{PAPER}" stroke-width="2.2"/>'
     )
 
 
@@ -33,4 +42,4 @@ def pastille_svg(standalone=False, cls="pastille"):
 
 def favicon_svg():
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="{PAPER}"/>'
-            f'<g transform="translate(3 3) scale(.9)">{mark_inner(False)}</g></svg>')
+            f'<g transform="translate(0 2)">{mark_inner(False)}</g></svg>')

@@ -67,6 +67,35 @@ def montagne_table():
 </section>"""
 
 
+
+ALP_SCENE = """<svg class="alp-scene" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <circle cx="1130" cy="190" r="92" fill="#F4B942"/>
+  <path d="M0 380L150 250l90 70 140-160 120 110 110-90 160 150 130-120 170 140 140-110 230 170V560H0Z" fill="#7FA7D6"/>
+  <path d="M0 430L210 220l120 110 180-200 170 170 120-90 190 180 160-140 290 230V560H0Z" fill="#DCE8F2"/>
+  <path d="M330 330l180-200 52 58-30 10-22-14-30 40-34-6Z M680 300l120-90 64 61-34-4-30 22-38-15Z M1030 310l160-140 74 64-40 4-26 24-36-20-40 16Z" fill="#FFFFFF"/>
+  <path d="M0 470c160-40 300-30 470 6s330 40 520 0 300-50 450-10V560H0Z" fill="#F5F8FB"/>
+  <g fill="#1F4A3D">
+    <path d="M70 486l22-58 22 58Z M108 492l18-46 18 46Z M1290 474l24-64 24 64Z M1334 482l18-46 18 46Z M1372 478l22-56 22 56Z"/>
+  </g>
+  <path d="M-20 120L1460 330" stroke="#12305A" stroke-width="3"/>
+  <g fill="#C8102E" stroke="#12305A" stroke-width="3">
+    <path d="M420 182v34M398 216h44v14a12 12 0 0 1-12 12h-20a12 12 0 0 1-12-12Z"/>
+    <path d="M900 250v34M878 284h44v14a12 12 0 0 1-12 12h-20a12 12 0 0 1-12-12Z"/>
+  </g>
+</svg>"""
+
+SKIS = """<svg class="alp-skis" viewBox="0 0 160 160" aria-hidden="true">
+  <g stroke="#F5F8FB" stroke-width="5" stroke-linecap="round"><path d="M34 22l92 118"/><path d="M126 22L34 140"/></g>
+  <circle cx="34" cy="132" r="9" fill="none" stroke="#F5F8FB" stroke-width="4"/><circle cx="126" cy="132" r="9" fill="none" stroke="#F5F8FB" stroke-width="4"/>
+  <g transform="rotate(-30 80 80)"><path d="M70 6c0-6 20-6 20 0v146c0 4-20 4-20 0Z" fill="#C8102E" stroke="#12305A" stroke-width="4"/><path d="M70 6c2-10 18-10 20 0" fill="#C8102E" stroke="#12305A" stroke-width="4"/></g>
+  <g transform="rotate(30 80 80)"><path d="M70 6c0-6 20-6 20 0v146c0 4-20 4-20 0Z" fill="#F5F8FB" stroke="#12305A" stroke-width="4"/></g>
+  <rect x="64" y="64" width="32" height="32" rx="6" fill="#C8102E" stroke="#12305A" stroke-width="4"/>
+  <path d="M80 70v20M70 80h20" stroke="#F5F8FB" stroke-width="5" stroke-linecap="round"/>
+</svg>"""
+
+RIDGE = '<svg class="alp-ridge" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60L120 22l70 26 110-40 90 30 130-36 100 34 120-28 110 24 140-34 110 30 120-22 120 32V60Z" fill="currentColor"/></svg>'
+
+
 # ---------------------------------------------------------------- ACCUEIL
 HOME_FAQ = [
     ("Un saisonnier doit-il avoir la mutuelle de l'entreprise ?", "Oui, en principe dès l'embauche, avec au moins 50 % de la cotisation payés par l'employeur. Un saisonnier en contrat de moins de 3 mois peut demander une dispense s'il a déjà une mutuelle individuelle responsable : l'employeur lui verse alors un « versement santé »."),
@@ -82,14 +111,15 @@ PAGES["index"] = (
     "Courtier mutuelle et prévoyance pour les entreprises de montagne en Savoie et Haute-Savoie : hôtels, restaurants, remontées mécaniques, saisonniers, versement santé. Étude gratuite.",
     {"@context": "https://schema.org", "@graph": [ORG_LD, faq_ld(HOME_FAQ)]},
     "",
-    f"""<section class="hero">
+    f"""<section class="hero hero-alp">
+  {ALP_SCENE}
   <div class="wrap">
     <div class="hero-copy">
-      <span class="kicker">Savoie · Haute-Savoie · stations de montagne</span>
-      <svg aria-hidden="true" width="64" height="60" viewBox="0 0 64 60">{mark_inner(False)}</svg>
-      <h1 class="hero-h1"><span class="l1">Courtier en mutuelle et prévoyance pour les entreprises de montagne en Savoie</span>
-      <span class="l2 relief-red">Une saison courte.<br>Une couverture solide.</span>
-      <span class="l3">Hôtels, remontées, saisonniers.</span></h1>
+      <svg class="alp-skis" viewBox="0 0 64 60" aria-hidden="true">{mark_inner(True)}</svg>
+      <span class="kicker">Savoie et Haute-Savoie</span>
+      <h1 class="hero-h1"><span class="l1">Courtier en mutuelle et prévoyance pour les entreprises de montagne</span>
+      <span class="l2">Une saison courte.<br>Une couverture solide.</span>
+      <span class="l3">Hôtels, remontées mécaniques, saisonniers.</span></h1>
       <p class="hero-lead">En station, tout se joue en quelques mois : des dizaines de saisonniers à affilier, des contrats courts, des dispenses, des départs en avril. Nous mettons en place une mutuelle et une prévoyance conformes à votre convention, au meilleur prix, et nous gérons la saison avec vous.</p>
       <ul class="hero-proofs">
         <li>{check()}Un conseiller dédié qui connaît les conventions des stations</li>

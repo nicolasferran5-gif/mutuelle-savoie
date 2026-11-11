@@ -459,6 +459,8 @@ def build():
     shutil.copy(os.path.join(HERE, "main.js"), os.path.join(OUT, "assets", "main.js"))
     for f, _ in INSURERS:
         shutil.copy(os.path.join(REPO_LOGOS, f + ".png"), os.path.join(OUT, "assets", "assureurs", f + ".png"))
+    if os.path.isdir(os.path.join(HERE, "fonts")):  # polices auto-hébergées (si le site en a)
+        shutil.copytree(os.path.join(HERE, "fonts"), os.path.join(OUT, "assets", "fonts"))
     open(os.path.join(OUT, "assets", "favicon.svg"), "w").write(favicon_svg())
     # icônes et images de partage (voir _build/images.py)
     if os.path.isdir(IMG):
