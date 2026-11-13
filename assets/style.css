@@ -535,3 +535,37 @@ h2{font-family:var(--f-slab)!important;font-weight:900!important;letter-spacing:
 .prose ol{padding-left:1.3em;display:grid;gap:10px}
 .prose h3{font-size:1.15rem;margin-top:14px}
 @media (max-width:860px){.bx-guides{grid-template-columns:minmax(0,1fr)}}
+
+/* Logos des assureurs en défilement */
+.bx-marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.bx-track{display:flex;width:max-content;gap:16px;animation:bxMarq 38s linear infinite}
+.bx-track:hover{animation-play-state:paused}
+.bx-track .insurers{display:flex!important;flex-wrap:nowrap;gap:16px;border:0}
+.bx-track .insurers div{flex:none;width:190px;height:84px;display:grid;place-items:center;border:0!important;border-radius:18px;background:#fff;padding:16px}
+.bx-track .insurers img{max-height:40px;max-width:140px;width:auto;height:auto;filter:none;opacity:1}
+@keyframes bxMarq{to{transform:translateX(calc(-50% - 8px))}}
+@media (prefers-reduced-motion:reduce){.bx-track{animation:none;flex-wrap:wrap;width:auto}.bx-track .insurers[aria-hidden]{display:none!important}.bx-track .insurers{flex-wrap:wrap}}
+/* Dessins */
+.bx-ill{width:100%;max-width:210px;height:auto;display:block;margin-bottom:6px}
+.steps li:has(.bx-ill)::before{position:absolute;top:8px;left:0}
+.steps li:has(.bx-ill){position:relative}
+.bx-cta-ill{position:absolute;right:24%;top:50%;width:230px;height:230px;transform:translateY(-50%) rotate(-8deg);opacity:.28;pointer-events:none}
+.cta-band{position:relative;overflow:hidden}.cta-band .wrap > :not(.bx-cta-ill){position:relative}
+/* Simulateur d'arrêt de travail */
+.bx-arret{background:#fff;border:1px solid var(--line);border-radius:28px;padding:32px;display:grid;gap:24px;max-width:920px;color:var(--ink)}
+.bx-arret-ctrl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:20px 28px;align-items:end}
+.bx-arret-ctrl label{display:grid;gap:8px}
+.bx-arret input[type=range]{width:100%;accent-color:var(--brand,var(--red));height:28px}
+.bx-arret-bar{display:flex;height:46px;border-radius:14px;overflow:hidden;background:var(--line)}
+.bx-arret-bar i{display:block;height:100%;transition:width .25s}
+.bx-arret .secu{background:var(--teal)}.bx-arret .emp{background:var(--brand,var(--red))}
+.bx-arret .trou{background:repeating-linear-gradient(135deg,#D9D4CC 0 8px,#ECE8E1 8px 16px)}
+.bx-arret-leg{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.bx-arret-leg li{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:center}
+.bx-arret-leg i{width:18px;height:18px;border-radius:6px}
+.bx-arret-leg strong{font-variant-numeric:tabular-nums}
+.bx-arret-msg{margin:16px 0 0;font-weight:600;font-size:1.08rem}
+.bx-arret-note{font-size:.85rem;color:var(--muted);margin:0}
+.bx-arret .btn{justify-self:start}
+#arret-de-travail{scroll-margin-top:84px}
+@media (max-width:700px){.bx-arret-ctrl{grid-template-columns:minmax(0,1fr)}.bx-arret{padding:22px}.bx-cta-ill{width:130px;height:130px;right:-10px;top:26%}.bx-track .insurers div{width:150px;height:70px}}

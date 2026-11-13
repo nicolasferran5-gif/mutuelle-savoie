@@ -373,6 +373,62 @@ def lexique_main(href):
 """
 
 
+# ------------------------------------------------------------------ dessins (couleurs du site par variables CSS)
+_B, _B2, _D, _Y = "var(--brand,var(--red))", "var(--brand2,var(--mustard,#F4C24B))", "var(--navy)", "var(--mustard,#F4C24B)"
+ILLUS = [
+    # 1. l'échange : deux bulles de conversation et un téléphone
+    f'<svg class="bx-ill" viewBox="0 0 200 130" aria-hidden="true"><ellipse cx="100" cy="118" rx="78" ry="8" fill="var(--paper2,#EEE)"/>'
+    f'<rect x="22" y="14" width="96" height="58" rx="16" fill="{_B}"/><path d="M44 72v18l20-18Z" fill="{_B}"/>'
+    f'<rect x="38" y="30" width="56" height="7" rx="3.5" fill="#fff" opacity=".9"/><rect x="38" y="45" width="38" height="7" rx="3.5" fill="#fff" opacity=".6"/>'
+    f'<rect x="96" y="48" width="84" height="50" rx="14" fill="{_B2}"/><path d="M158 98v15l-18-15Z" fill="{_B2}"/>'
+    f'<circle cx="120" cy="73" r="5" fill="{_D}"/><circle cx="138" cy="73" r="5" fill="{_D}"/><circle cx="156" cy="73" r="5" fill="{_D}"/>'
+    f'<path d="M172 18l2.500 6 6 2.500-6 2.500-2.500 6-2.500-6-6-2.500 6-2.500Z" fill="{_Y}"/></svg>',
+    # 2. le comparatif : une feuille avec trois barres et une coche
+    f'<svg class="bx-ill" viewBox="0 0 200 130" aria-hidden="true"><ellipse cx="100" cy="118" rx="78" ry="8" fill="var(--paper2,#EEE)"/>'
+    f'<rect x="46" y="8" width="108" height="104" rx="12" fill="#fff" stroke="{_D}" stroke-width="3"/>'
+    f'<rect x="60" y="22" width="50" height="7" rx="3.5" fill="{_D}"/>'
+    f'<rect x="62" y="74" width="18" height="26" rx="5" fill="{_B2}"/><rect x="91" y="56" width="18" height="44" rx="5" fill="{_B}"/><rect x="120" y="44" width="18" height="56" rx="5" fill="{_D}"/>'
+    f'<circle cx="156" cy="26" r="17" fill="{_B}" stroke="#fff" stroke-width="4"/><path d="M148 26l6 6 10-11" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'
+    f'<path d="M28 40l2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" fill="{_Y}"/></svg>',
+    # 3. la mise en place : un bouclier, une équipe protégée
+    f'<svg class="bx-ill" viewBox="0 0 200 130" aria-hidden="true"><ellipse cx="100" cy="118" rx="78" ry="8" fill="var(--paper2,#EEE)"/>'
+    f'<path d="M100 6 150 20v36c0 30-20 48-50 60-30-12-50-30-50-60V20Z" fill="{_B}"/>'
+    f'<path d="M100 6 150 20v36c0 30-20 48-50 60Z" fill="{_D}" opacity=".18"/>'
+    f'<circle cx="80" cy="50" r="10" fill="#fff"/><path d="M62 84a18 18 0 0 1 36 0Z" fill="#fff"/>'
+    f'<circle cx="120" cy="50" r="10" fill="{_B2}"/><path d="M102 84a18 18 0 0 1 36 0Z" fill="{_B2}"/>'
+    f'<circle cx="100" cy="42" r="12" fill="{_Y}" stroke="{_B}" stroke-width="3"/><path d="M78 86a22 22 0 0 1 44 0Z" fill="{_Y}" stroke="{_B}" stroke-width="3"/>'
+    f'<path d="M168 30l2.500 6 6 2.500-6 2.500-2.500 6-2.500-6-6-2.500 6-2.500Z" fill="{_Y}"/></svg>',
+]
+
+
+def arret_block():
+    return f"""<section class="band bg-cream2" id="arret-de-travail">
+  <div class="wrap">
+    <div class="sec-head"><span class="t-label">Simulateur</span><h2>Un salarié est en arrêt maladie : qui paie quoi, jour après jour ?</h2><p>Déplacez le curseur pour voir d'où vient le revenu du salarié selon la loi. C'est là que la prévoyance fait la différence.</p></div>
+    <div class="bx-arret" data-arret>
+      <div class="bx-arret-ctrl">
+        <label><span class="lbl">Ancienneté du salarié</span>
+          <select data-anc><option value="0">Moins d'un an</option><option value="1" selected>1 à 5 ans</option><option value="6">6 à 10 ans</option><option value="11">11 à 15 ans</option><option value="16">16 à 20 ans</option><option value="21">21 à 25 ans</option><option value="26">26 à 30 ans</option><option value="31">31 ans et plus</option></select></label>
+        <label><span class="lbl">Jour d'arrêt : <strong data-jour>45</strong></span>
+          <input type="range" min="1" max="200" value="45" data-day aria-label="Jour d'arrêt"></label>
+      </div>
+      <div class="bx-arret-out">
+        <div class="bx-arret-bar" role="img" aria-label="Répartition du revenu du salarié"><i class="secu" data-b-secu></i><i class="emp" data-b-emp></i><i class="trou" data-b-trou></i></div>
+        <ul class="bx-arret-leg">
+          <li><i class="secu"></i><span>Sécurité sociale</span><strong data-v-secu></strong></li>
+          <li><i class="emp"></i><span>Employeur (maintien de salaire)</span><strong data-v-emp></strong></li>
+          <li><i class="trou"></i><span>Perte de revenu sans prévoyance</span><strong data-v-trou></strong></li>
+        </ul>
+        <p class="bx-arret-msg" data-msg></p>
+      </div>
+      <p class="bx-arret-note">Règles légales pour une maladie ordinaire (Code du travail) : indemnités de la Sécurité sociale égales à 50 % du salaire journalier de base, dans la limite de leur plafond, à partir du 4e jour ; complément de l'employeur à partir du 8e jour, pour les salariés ayant au moins un an d'ancienneté. Pourcentages du salaire brut, à titre indicatif. Votre convention collective peut prévoir mieux.</p>
+      <a class="btn btn-red" href="#etude">Vérifier ce que couvre mon contrat</a>
+    </div>
+  </div>
+</section>
+"""
+
+
 def _slug(t):
     import unicodedata
     t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
@@ -582,7 +638,25 @@ def process(path, slug, mode, versions, made=()):
         if len(ends) >= 2 and 'id="diagnostic"' not in h:
             k = mi + ends[1]
             h = h[:k] + "\n" + quiz_block() + h[k:]
-        cb = guides_home_block(made, mode) + cases_block() + situations_block() + compare_block()
+        # logos des assureurs en défilement continu (liste doublée, la copie est masquée aux lecteurs d'écran)
+        mi_ = re.search(r'<div class="insurers">(.*?)</div>\s*</div>\s*</section>', h, re.S)
+        if mi_ and "bx-marquee" not in h:
+            items = mi_.group(1)
+            dup = re.sub(r'alt="[^"]*"', 'alt=""', items)
+            h = h.replace('<div class="insurers">' + items + "</div>",
+                          f'<div class="bx-marquee"><div class="bx-track"><div class="insurers">{items}</div><div class="insurers" aria-hidden="true">{dup}</div></div></div>', 1)
+        # dessins au-dessus des trois étapes ; le logo dessiné en grand dans le bandeau final
+        ms = re.search(r'<ol class="steps">(.*?)</ol>', h, re.S)
+        if ms and "bx-ill" not in ms.group(1):
+            k = [0]
+            def li(m):
+                k[0] += 1
+                return "<li>" + (ILLUS[k[0] - 1] if k[0] <= 3 else "")
+            h = h.replace(ms.group(1), re.sub(r"<li>", li, ms.group(1)), 1)
+        if getattr(CFG, "LOGO", "") in MS.M:
+            big = logo_svg(versions["logo_bg"], versions["accent"], ' class="bx-cta-ill"', dark=versions["navy"], sec=versions["sec"])
+            h = re.sub(r'(<section class="cta-band[^"]*">\s*<div class="wrap">)', lambda m: m.group(1) + big, h, count=1)
+        cb = guides_home_block(made, mode) + cases_block() + situations_block() + arret_block() + compare_block()
         if cb:
             i = h.rfind('<section class="cta-band')
             if i > 0: h = h[:i] + cb + h[i:]

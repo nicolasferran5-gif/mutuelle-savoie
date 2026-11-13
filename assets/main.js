@@ -255,3 +255,33 @@ var CONFIG = {
     if (empty) empty.hidden = n > 0;
   });
 })();
+
+/* ---- boost : simulateur d'arrêt de travail (règles légales de maintien de salaire) ---- */
+(function () {
+  var box = document.querySelector('[data-arret]'); if (!box) return;
+  var q = function (s) { return box.querySelector(s); };
+  var day = q('[data-day]'), anc = q('[data-anc]');
+  function calc() {
+    var d = +day.value, a = +anc.value;
+    var dur = a < 1 ? 0 : Math.min(90, 30 + 10 * Math.floor((a - 1) / 5));
+    var secu = d >= 4 ? 50 : 0, total = secu, phase = '';
+    if (a >= 1 && d >= 8 && d <= 7 + dur) { total = 90; phase = 'p1'; }
+    else if (a >= 1 && d > 7 + dur && d <= 7 + 2 * dur) { total = 66.7; phase = 'p2'; }
+    else if (d < 4) phase = 'carence';
+    else if (a >= 1 && d < 8) phase = 'attente';
+    else phase = 'fin';
+    var emp = Math.max(0, total - secu), trou = 100 - total;
+    q('[data-jour]').textContent = d;
+    q('[data-b-secu]').style.width = secu + '%'; q('[data-b-emp]').style.width = emp + '%'; q('[data-b-trou]').style.width = trou + '%';
+    var f = function (v) { return (Math.round(v * 10) / 10).toString().replace('.', ',') + ' %'; };
+    q('[data-v-secu]').textContent = f(secu); q('[data-v-emp]').textContent = f(emp); q('[data-v-trou]').textContent = f(trou);
+    var m = { carence: 'Jours 1 à 3 : délai de carence de la Sécurité sociale, le salarié ne perçoit rien sans prévoyance ni accord plus favorable.',
+      attente: 'Jours 4 à 7 : seule la Sécurité sociale verse ses indemnités. Le complément de l\'employeur commence au 8e jour.',
+      p1: 'L\'employeur complète jusqu\'à 90 % du salaire brut pendant ' + dur + ' jours. Une prévoyance peut lui rembourser ce coût.',
+      p2: 'L\'employeur ne complète plus qu\'aux deux tiers du salaire brut, pendant ' + dur + ' jours.',
+      fin: a < 1 ? 'Moins d\'un an d\'ancienneté : la loi n\'impose aucun complément à l\'employeur. Sans prévoyance, le salarié vit avec la moitié de son salaire.'
+                 : 'Le maintien de salaire est terminé : sans prévoyance, le salarié ne perçoit plus que les indemnités de la Sécurité sociale.' };
+    q('[data-msg]').textContent = m[phase];
+  }
+  day.addEventListener('input', calc); anc.addEventListener('change', calc); calc();
+})();
