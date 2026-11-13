@@ -706,10 +706,10 @@ def process(path, slug, mode, versions, made=()):
         h = re.sub(r'<link rel="stylesheet" href="https://fonts\.googleapis\.com[^>]*>\n?', "", h)
         a = ("../" * depth + "assets/") if mode == "preview" else "/assets/"
         pl = "".join(f'<link rel="preload" href="{a}fonts/{f}" as="font" type="font/woff2" crossorigin>\n' for f in
-                     ("source-serif-4-latin-wght-normal.woff2", "figtree-latin-wght-normal.woff2"))
+                     ("big-shoulders-display-latin-900-normal.woff2", "manrope-latin-500-normal.woff2"))
         h = h.replace('<link rel="stylesheet" href="', pl + '<link rel="stylesheet" href="', 1)
         h = re.sub(r'(<span class="l2[^"]*">)(.*?)(</span>)', lambda m: m.group(1) + re.sub(r"<br\s*/?>", " ", m.group(2)) + m.group(3), h, count=1, flags=re.S)
-        pk = [0]
+        pk = [0]; scene_arts = []
         def poster(m):
             ill = re.search(r'<svg class="ill".*?</svg>', m.group(2), re.S)
             go = re.search(r'<span class="go"[^>]*>(.*?)</span>', m.group(2), re.S)
@@ -722,9 +722,24 @@ def process(path, slug, mode, versions, made=()):
             art = MS.P[key] if key else MS.M.get(getattr(CFG, "LOGO", ""), MS.P["document"])
             pal = dict(D=versions["navy"], A=versions["logo_bg"], Y=versions["accent"], S=versions["sec"], W="#FFFFFF", C="#F3ECDD")
             ico = f'<svg class="bx-draw" viewBox="0 0 64 64" aria-hidden="true">{art.format(**pal)}</svg>'
+            scene_arts.append(art.format(**pal))
             return (f'<a class="poster" href="{m.group(1)}">{ico}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
                     f'<span class="sc">{_html.escape(" ".join(parts), quote=False)}</span></div><span class="go">Voir la page</span></a>')
         h = re.sub(r'<a class="poster[^"]*" href="([^"]*)">(.*?)</a>', poster, h, flags=re.S)
+        if slug == "index" and "bx-scene" not in h:
+            arts_ = list(dict.fromkeys(scene_arts))
+            if getattr(CFG, "LOGO", "") in MS.M:
+                arts_.insert(len(arts_) // 2, MS.M[CFG.LOGO].format(D=versions["navy"], A=versions["logo_bg"], Y=versions["accent"], S=versions["sec"], W="#FFFFFF", C="#F3ECDD"))
+            if arts_:
+                slots = [(70, 92), (250, 70), (420, 104), (610, 78), (800, 112), (1000, 74), (1170, 98), (1330, 80)]
+                objs = "".join(f'<svg x="{x - w / 2:.0f}" y="{176 - w:.0f}" width="{w}" height="{w}" viewBox="0 0 64 64">{arts_[i % len(arts_)]}</svg>' for i, (x, w) in enumerate(slots))
+                scene = (f'<svg class="bx-scene" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">'
+                         f'<path d="M0 120Q180 60 360 110T720 96 1080 116 1440 84V220H0Z" fill="#fff" opacity=".07"/>'
+                         f'<path d="M0 150Q240 104 480 146T960 136 1440 128V220H0Z" fill="#fff" opacity=".1"/>'
+                         f'<circle cx="1210" cy="46" r="26" fill="{versions["accent"]}"/>{objs}'
+                         f'<rect y="172" width="1440" height="48" fill="{versions["navy"]}"/><path d="M0 172H1440" stroke="{versions["accent"]}" stroke-width="4"/>'
+                         f'<path d="M40 196h60M180 196h60M320 196h60M460 196h60M600 196h60M740 196h60M880 196h60M1020 196h60M1160 196h60M1300 196h60" stroke="#fff" stroke-width="3" opacity=".35" stroke-linecap="round"/></svg>')
+                h = re.sub(r'(<section [^>]*class="[^"]*\bhero\b[^"]*"[^>]*>|<section class="hero[^"]*">)', lambda m: m.group(1) + scene, h, count=1)
         h = re.sub(r'<meta name="theme-color" content="[^"]*">', f'<meta name="theme-color" content="{versions["navy"]}">', h)
 
     if getattr(CFG, "LOGO", ""):
