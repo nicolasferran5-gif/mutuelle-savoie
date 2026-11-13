@@ -129,3 +129,13 @@
 .bx-term dd{margin:0;color:var(--muted)}
 .bx-term[hidden]{display:none}
 @media (max-width:700px){.bx-term{grid-template-columns:minmax(0,1fr)}}
+
+/* Guides */
+.bx-guides{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bx-guide{text-decoration:none;color:var(--ink)}
+.bx-guide h3{font-size:1.2rem;line-height:1.25}
+.bx-guide p{color:var(--muted);font-size:.97rem;margin:0}
+.bx-guide::after{content:"Lire le guide →";font-weight:650;font-size:.95rem;color:var(--teal);margin-top:auto;padding-top:6px}
+.prose ol{padding-left:1.3em;display:grid;gap:10px}
+.prose h3{font-size:1.15rem;margin-top:14px}
+@media (max-width:860px){.bx-guides{grid-template-columns:minmax(0,1fr)}}

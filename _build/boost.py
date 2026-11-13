@@ -14,6 +14,7 @@ import os, re, json, glob, hashlib, shutil, html as _html
 HERE = os.path.dirname(os.path.abspath(__file__))
 BX = os.path.join(HERE, "boost")
 import boost_cfg as CFG
+import boost_guides as GD
 
 WWC = "https://www.wealthwiseconseil.fr"
 AUTHOR = {"@type": "Person", "name": "Nicolas Ferran", "jobTitle": "Courtier en assurance, fondateur de WealthWise Conseil",
@@ -390,13 +391,110 @@ def html2md(h, base):
     return re.sub(r"\n{3,}", "\n\n", b).strip()
 
 
+MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+
+
+def _date_fr(iso):
+    y, mo, d = iso.split("-")
+    return f"{int(d)}{'er' if int(d) == 1 else ''} {MOIS[int(mo) - 1]} {y}"
+
+
+def build_guides(out, mode, idx, t0, d0, ft):
+    """Guides de fond : pages bâties sur le gabarit d'un article du blog, plus une page sommaire /guides."""
+    arts = sorted(glob.glob(os.path.join(out, "blog", "*.html")))
+    if not arts:
+        return []
+    sh = open(arts[0], encoding="utf-8").read()
+    old_slug = os.path.basename(arts[0])[:-5]
+    old_full = re.search(r"<title>(.*?)</title>", sh, re.S).group(1)
+    old_head = re.search(r'<h1 class="art-h1">(.*?)</h1>', sh, re.S).group(1)
+    old_desc = re.search(r'<meta name="description" content="(.*?)">', sh).group(1)
+    href = (lambda x: f"../{x}.html") if mode == "preview" else (lambda x: "/" if x == "index" else f"/{x}")
+    obs = sorted(glob.glob(os.path.join(out, "obligations*.html")))
+    ob = href(os.path.basename(obs[0])[:-5]) if obs else href("index")
+    os.makedirs(os.path.join(out, "guides"), exist_ok=True)
+    made = []
+    pub = getattr(CFG, "GUIDE_PUB", "") or CFG.PUBLIC
+    for g in GD.GUIDES:
+        title = g["title"].format(pub=pub)
+        body = g["body"].format(pub=pub, conv=CFG.CONVENTION, ob=ob)
+        faq = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in g["faq"])
+        body += f"<h2>Questions fréquentes</h2>{faq}"
+        mins = max(3, round(len(_txt(body).split()) / 210))
+        h = sh.replace(f"assets/og/{old_slug}.png", "assets/og-default.png")
+        h = h.replace(old_full, _html.escape(f"{title} · {CFG.BRAND}", quote=True)).replace(old_head, _html.escape(title, quote=False))
+        h = h.replace(old_desc, _html.escape(g["desc"], quote=True))
+        h = h.replace(f"/blog/{old_slug}", f"/guides/{g['slug']}")
+        h = re.sub(r'<span class="crumb">.*?</span>', f'<span class="crumb"><a href="{href("index")}">Accueil</a> · <a href="{href("guides")}">Guides</a> · {g["cat"]}</span>', h, count=1, flags=re.S)
+        h = re.sub(r'(<h1 class="art-h1">.*?</h1>\s*)<p class="lead"[^>]*>.*?</p>',
+                   lambda m: m.group(1) + f'<p class="lead" style="margin-top:14px">Mis à jour le {_date_fr(GD.MAJ)} · {mins} min de lecture · Par WealthWise Conseil</p>', h, count=1, flags=re.S)
+        mk = '<div class="wrap narrow prose article">'
+        i = h.index(mk) + len(mk); j = h.index('<div class="author-box">', i)
+        h = h[:i] + "\n" + body + "\n    " + h[j:]
+        url = f"{CFG.DOMAIN}/guides/{g['slug']}"
+        ld = {"@context": "https://schema.org", "@graph": [
+            {"@type": "Article", "headline": title, "description": g["desc"], "datePublished": GD.MAJ, "dateModified": GD.MAJ, "inLanguage": "fr-FR",
+             "mainEntityOfPage": url, "author": AUTHOR, "image": f"{CFG.DOMAIN}/assets/og-default.png",
+             "publisher": {"@type": "Organization", "name": "WealthWise Conseil", "url": WWC + "/"}},
+            {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in g["faq"]]}]}
+        h = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + "</script>", h, count=1, flags=re.S)
+        open(os.path.join(out, "guides", g["slug"] + ".html"), "w", encoding="utf-8").write(h)
+        made.append((g, title))
+    # page sommaire
+    h0 = (lambda x: f"{x}.html") if mode == "preview" else (lambda x: "/" if x == "index" else f"/{x}")
+    gt = f"Guides de l'employeur : mutuelle et prévoyance d'entreprise · {CFG.BRAND}"
+    gd = "Mise en place, dispenses, changement de contrat, prévoyance obligatoire, coût réel : les guides complets pour les employeurs, à jour des chiffres 2026."
+    hd = idx[:idx.index("<main")].replace(t0, _html.escape(gt, quote=True)).replace(d0, _html.escape(gd, quote=True))
+    hd = hd.replace(f'<link rel="canonical" href="{CFG.DOMAIN}/">', f'<link rel="canonical" href="{CFG.DOMAIN}/guides">')
+    hd = hd.replace(f'<meta property="og:url" content="{CFG.DOMAIN}/">', f'<meta property="og:url" content="{CFG.DOMAIN}/guides">').replace(' aria-current="page"', "")
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": gt, "url": CFG.DOMAIN + "/guides", "inLanguage": "fr-FR",
+          "hasPart": [{"@type": "Article", "headline": t, "url": f"{CFG.DOMAIN}/guides/{g['slug']}"} for g, t in made]}
+    hd = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + "</script>", hd, count=1, flags=re.S)
+    gpre = "guides/" + "{}" + (".html" if mode == "preview" else "")
+    cards = "".join(f'<a class="rule bx-guide" href="{("/" if mode != "preview" else "") + gpre.format(g["slug"])}"><span class="tag">{g["cat"]}</span><h3>{t}</h3><p>{g["desc"]}</p></a>' for g, t in made)
+    main = f"""<main id="contenu">
+<section class="page-hero bg-cream">
+  <div class="wrap" style="grid-template-columns:minmax(0,1fr)">
+    <div>
+      <span class="crumb"><a href="{h0('index')}">Accueil</a> · Guides</span>
+      <h1 class="kw-h1">Guides de l'employeur : mutuelle et prévoyance d'entreprise</h1>
+      <p class="lead">Les questions que se posent les employeurs {getattr(CFG, "GUIDE_PUB", "") or CFG.PUBLIC}, traitées à fond : étapes, documents, délais et chiffres 2026. Rédigés par un courtier, relus à chaque changement de barème.</p>
+    </div>
+  </div>
+</section>
+<section class="band bg-cream" style="padding-top:36px">
+  <div class="wrap"><div class="rules bx-guides">{cards}</div>
+  <p style="margin-top:30px"><a class="btn btn-red" href="{h0('devis')}">Poser ma question à un conseiller</a></p></div>
+</section>
+</main>
+"""
+    open(os.path.join(out, "guides.html"), "w", encoding="utf-8").write(hd + main + ft)
+    return made
+
+
+def guides_home_block(made, mode):
+    if not made:
+        return ""
+    u = (lambda sl: f"guides/{sl}.html") if mode == "preview" else (lambda sl: f"/guides/{sl}")
+    hub = "guides.html" if mode == "preview" else "/guides"
+    cards = "".join(f'<a class="rule bx-guide" href="{u(g["slug"])}"><span class="tag">{g["cat"]}</span><h3>{t}</h3><p>{g["desc"]}</p></a>' for g, t in made[:4])
+    return f"""<section class="band bg-cream2" id="guides">
+  <div class="wrap">
+    <div class="sec-head"><span class="t-label">Guides de l'employeur</span><h2>Les réponses complètes aux questions que vous vous posez</h2><p>Des guides de fond, à jour des chiffres 2026, pour décider en connaissance de cause.</p></div>
+    <div class="rules bx-guides">{cards}</div>
+    <p style="margin-top:26px"><a class="btn btn-navy" href="{hub}">Voir tous les guides</a></p>
+  </div>
+</section>
+"""
+
+
 # ------------------------------------------------------------------ traitement d'une page
-def process(path, slug, mode, versions):
+def process(path, slug, mode, versions, made=()):
     h = open(path, encoding="utf-8").read()
     depth = slug.count("/")
     pre = "../" * depth if mode == "preview" else "/"
     href = (lambda s: f"{pre}{s}.html") if mode == "preview" else (lambda s: "/" if s == "index" else f"/{s}")
-    is_art = slug.startswith("blog/")
+    is_art = slug.startswith("blog/") or slug.startswith("guides/")
     title = _html.unescape(re.search(r"<title>(.*?)</title>", h, re.S).group(1))
     desc_m = re.search(r'<meta name="description" content="(.*?)">', h)
     desc = desc_m.group(1) if desc_m else ""
@@ -438,10 +536,10 @@ def process(path, slug, mode, versions):
         h = re.sub(r'<meta name="theme-color" content="[^"]*">', f'<meta name="theme-color" content="{versions["navy"]}">', h)
 
     if getattr(CFG, "LOGO", ""):
-        h = re.sub(r'<svg class="logo-mark"[^>]*>.*?</svg>', lambda m: logo_svg(versions["navy"], versions["accent"]), h, flags=re.S)
+        h = re.sub(r'<svg class="logo-mark"[^>]*>.*?</svg>', lambda m: logo_svg(versions["logo_bg"], versions["accent"]), h, flags=re.S)
 
     # H1 porteur du mot-clé sur les pages intérieures ; l'ancien titre devient le slogan
-    if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique"):
+    if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique", "guides"):
         m = re.search(r'<h1([^>]*)>(.*?)</h1>\s*<p class="sub"([^>]*)>(.*?)</p>', h, re.S)
         if m and "art-h1" not in m.group(1):
             kw = _html.escape(re.sub(r"\s*·\s*[^·]+$", "", title), quote=False)
@@ -466,7 +564,7 @@ def process(path, slug, mode, versions):
         if len(ends) >= 2 and 'id="diagnostic"' not in h:
             k = mi + ends[1]
             h = h[:k] + "\n" + quiz_block() + h[k:]
-        cb = cases_block() + situations_block() + compare_block()
+        cb = guides_home_block(made, mode) + cases_block() + situations_block() + compare_block()
         if cb:
             i = h.rfind('<section class="cta-band')
             if i > 0: h = h[:i] + cb + h[i:]
@@ -526,7 +624,8 @@ def process(path, slug, mode, versions):
                       "publisher": {"@type": "Organization", "name": "WealthWise Conseil", "url": WWC + "/"}})
     else:
         crumbs = [("Accueil", CFG.DOMAIN + "/")]
-        if is_art: crumbs.append(("Blog", CFG.DOMAIN + "/blog"))
+        if slug.startswith("guides/"): crumbs.append(("Guides", CFG.DOMAIN + "/guides"))
+        elif is_art: crumbs.append(("Blog", CFG.DOMAIN + "/blog"))
         crumbs.append((re.sub(r"\s*·\s*[^·]+$", "", title), CFG.DOMAIN + "/" + slug))
         extra.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]})
@@ -535,7 +634,7 @@ def process(path, slug, mode, versions):
     # pied de page : lien « Qui sommes-nous » ; barre d'appel sur mobile
     ml = re.search(r'<li><a href="([^"]*mentions-legales[^"]*)">', h)
     if ml and "Qui sommes-nous</a></li>" not in h:
-        h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li><li><a href="{href("lexique")}">Lexique</a></li>' + ml.group(0), 1)
+        h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li><li><a href="{href("guides")}">Guides</a></li><li><a href="{href("lexique")}">Lexique</a></li>' + ml.group(0), 1)
     if is_art:
         h = h.replace("<header", '<div class="bx-progress" aria-hidden="true"><i></i></div>\n<header', 1)
     if slug != "mentions-legales":
@@ -565,9 +664,10 @@ def run(out, mode):
     open(js_p, "w", encoding="utf-8").write(js)
     accent = (tk.get("mustard") if CFG.THEME == "v2" else None) or "#F4C24B"
     if _lum(_hex(accent)) < .35: accent = "#F4C24B"
-    versions = {"css": _hash(css), "js": _hash(js), "navy": navy, "accent": accent}
+    logo_bg = tk.get(getattr(CFG, "LOGO_BG", "red"), navy) if CFG.THEME == "v2" else navy
+    versions = {"css": _hash(css), "js": _hash(js), "navy": navy, "accent": accent, "logo_bg": logo_bg}
     if getattr(CFG, "LOGO", ""):
-        open(os.path.join(out, "assets", "favicon.svg"), "w").write(logo_svg(navy, accent, "", ' xmlns="http://www.w3.org/2000/svg"'))
+        open(os.path.join(out, "assets", "favicon.svg"), "w").write(logo_svg(logo_bg, accent, "", ' xmlns="http://www.w3.org/2000/svg"'))
         for f in glob.glob(os.path.join(BX, "icons", "*")):
             shutil.copy(f, os.path.join(out, "favicon.ico") if f.endswith(".ico") else os.path.join(out, "assets", os.path.basename(f)))
 
@@ -600,11 +700,13 @@ def run(out, mode):
     hl = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: '<script type="application/ld+json">' + json.dumps(lld, ensure_ascii=False) + "</script>", hl, count=1, flags=re.S)
     open(os.path.join(out, "lexique.html"), "w", encoding="utf-8").write(hl + lexique_main(href0) + ft)
 
+    made = build_guides(out, mode, idx, t0, d0, ft)
+
     # 3. toutes les pages
     pages = []
     for p in sorted(glob.glob(os.path.join(out, "**", "*.html"), recursive=True)):
         slug = os.path.relpath(p, out)[:-5].replace(os.sep, "/")
-        pages.append((slug,) + process(p, slug, mode, versions))
+        pages.append((slug,) + process(p, slug, mode, versions, made))
 
     if mode != "deploy":
         return
@@ -615,6 +717,10 @@ def run(out, mode):
     sm_p = os.path.join(out, "sitemap.xml")
     if os.path.exists(sm_p):
         sm = open(sm_p).read()
+        if "/guides<" not in sm:
+            sm = sm.replace("</urlset>", f"  <url><loc>{CFG.DOMAIN}/guides</loc><lastmod>{GD.MAJ}</lastmod></url>\n" + "".join(
+                f"  <url><loc>{CFG.DOMAIN}/guides/{g['slug']}</loc><lastmod>{GD.MAJ}</lastmod></url>\n" for g, _ in made) + "</urlset>")
+            open(sm_p, "w").write(sm)
         if "/lexique<" not in sm:
             sm = sm.replace("</urlset>", f"  <url><loc>{CFG.DOMAIN}/lexique</loc><lastmod>2026-11-13</lastmod></url>\n</urlset>")
             open(sm_p, "w").write(sm)
@@ -624,8 +730,8 @@ def run(out, mode):
             open(sm_p, "w").write(sm)
     url = lambda s: CFG.DOMAIN + ("/" if s == "index" else "/" + s)
     clean = lambda t: re.sub(r"\s*·\s*[^·]+$", "", t)
-    fixed = [p for p in pages if not p[0].startswith("blog/") and p[0] not in ("mentions-legales", "index", "blog", "devis")]
-    arts = [p for p in pages if p[0].startswith("blog/")]
+    fixed = [p for p in pages if not p[0].startswith("blog/") and not p[0].startswith("guides/") and p[0] not in ("mentions-legales", "index", "blog", "devis")]
+    arts = [p for p in pages if p[0].startswith("guides/")] + [p for p in pages if p[0].startswith("blog/")]
     home = next(p for p in pages if p[0] == "index")
     faq = []
     m = re.search(r'<script type="application/ld\+json">(.*?)</script>', open(os.path.join(out, "index.html"), encoding="utf-8").read(), re.S)
