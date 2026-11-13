@@ -450,3 +450,43 @@ h2{font-family:var(--f-slab)!important;font-weight:900!important;letter-spacing:
   .site-foot{padding-bottom:96px}
 }
 @media (max-width:860px){.hero .hero-lead{display:none}.hero-proofs li:nth-child(n+4){display:none}}
+
+/* Diagnostic express */
+.bx-quiz{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:26px;max-width:860px;color:var(--ink)}
+.bx-quiz-list{margin:0;padding-left:1.2em;display:grid;gap:14px}
+.bx-quiz-list li span{display:block;color:var(--muted);font-size:.95rem;margin-top:2px}
+.bx-quiz.on .bx-quiz-list{display:none}
+.bx-q-top{display:flex;align-items:center;gap:12px;font-size:.9rem;font-weight:600;color:var(--muted);margin-bottom:16px}
+.bx-q-dots{display:flex;gap:6px;flex:1}
+.bx-q-dots i{flex:1;height:6px;border-radius:99px;background:var(--line)}
+.bx-q-dots i.d{background:var(--teal)}
+.bx-q-text{font:700 clamp(1.2rem,2.2vw,1.5rem)/1.25 var(--f-slab);margin:0 0 18px;letter-spacing:-.01em}
+.bx-q-ans{display:flex;flex-wrap:wrap;gap:10px}
+.bx-q-ans button{font:inherit;font-weight:600;border:1.5px solid var(--line);background:var(--white);color:var(--ink);border-radius:10px;padding:12px 20px;cursor:pointer;min-width:96px}
+.bx-q-ans button:hover,.bx-q-ans button:focus-visible{border-color:var(--teal);background:var(--cream-2)}
+.bx-q-res{display:grid;grid-template-columns:auto 1fr;gap:22px 28px;align-items:center}
+.bx-ring{width:132px;height:132px}
+.bx-ring circle{fill:none;stroke-width:12}
+.bx-ring .bg{stroke:var(--line)}
+.bx-ring .fg{stroke:var(--teal);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .8s ease}
+.bx-ring text{font:700 30px var(--f-slab);fill:var(--ink)}
+.bx-q-res h3{font:700 1.45rem/1.2 var(--f-slab);margin:0 0 6px}
+.bx-q-res p{margin:0;color:var(--muted)}
+.bx-q-issues{grid-column:1/-1;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.bx-q-issues li{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:0 12px 12px 0;padding:12px 16px}
+.bx-q-issues li.ok{border-left-color:var(--teal)}
+.bx-q-issues strong{display:block}
+.bx-q-issues span{color:var(--muted);font-size:.95rem}
+.bx-q-cta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.bx-q-cta button.link{background:none;border:0;font:inherit;font-size:.92rem;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+/* Sommaire et progression de lecture */
+.bx-toc{background:var(--cream-2);border-radius:12px;padding:16px 18px}
+.bx-toc strong{font-size:.95rem}
+.bx-toc ol{margin:8px 0 0;padding-left:1.25em;display:grid;gap:5px}
+.bx-toc a{color:var(--ink)!important;font-weight:500!important;text-decoration-color:var(--line)}
+.bx-toc a:hover{color:var(--teal)!important}
+.prose h2[id]{scroll-margin-top:90px}
+#etude,#diagnostic{scroll-margin-top:84px}
+.bx-progress{position:fixed;left:0;right:0;top:0;height:3px;z-index:40;pointer-events:none}
+.bx-progress i{display:block;height:100%;width:0;background:var(--red)}
+@media (max-width:560px){.bx-q-res{grid-template-columns:1fr;justify-items:start}.bx-quiz{padding:20px}.bx-ring{width:104px;height:104px}}

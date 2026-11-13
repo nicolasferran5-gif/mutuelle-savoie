@@ -182,6 +182,63 @@ def about_main(href):
 """
 
 
+
+QUIZ = [
+    ("Tous vos salariés ont-ils la mutuelle de l'entreprise, ou une dispense écrite et signée ?",
+     "Affiliations et dispenses", "Chaque salarié doit être affilié ou avoir signé une dispense prévue par les textes. Une dispense orale ne vaut rien en cas de contrôle URSSAF.", 0),
+    ("Avez-vous un écrit qui met en place le régime (décision de l'employeur ou accord), remis à chaque salarié ?",
+     "L'acte de mise en place", "Sans cet écrit remis contre signature, les exonérations de charges sur la part employeur peuvent être remises en cause.", 0),
+    ("Vos cadres ont-ils une prévoyance d'au moins 1,50 % de la tranche A, payée par l'employeur ?",
+     "La prévoyance des cadres", "C'est une obligation nationale. Si elle manque, l'employeur peut devoir verser lui-même un capital de trois plafonds annuels de la Sécurité sociale en cas de décès.", 1),
+    ("Votre contrat a-t-il été comparé à d'autres assureurs depuis moins de trois ans ?",
+     "Le prix et les garanties", "Les tarifs et les obligations de branche évoluent chaque année. Un contrat jamais remis en concurrence est souvent plus cher ou en retard sur la convention.", 0),
+]
+
+
+def quiz_block():
+    lis = "".join(f'<li data-t="{_html.escape(t)}" data-x="{_html.escape(x)}" data-na="{na}"><strong>{q}</strong><span>{x}</span></li>' for q, t, x, na in QUIZ)
+    return f"""<section class="band bg-cream2 bx-quiz-band" id="diagnostic">
+  <div class="wrap">
+    <div class="sec-head"><span class="t-label">Diagnostic express</span><h2>Votre entreprise est-elle en règle ? 4 questions, 30 secondes</h2><p>Répondez sans rien saisir : vous voyez tout de suite les points à vérifier dans votre mutuelle et votre prévoyance.</p></div>
+    <div class="bx-quiz" data-quiz><ol class="bx-quiz-list">{lis}</ol></div>
+  </div>
+</section>
+"""
+
+
+def _slug(t):
+    import unicodedata
+    t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", t).strip("-")[:60] or "partie"
+
+
+def html2md(h, base):
+    """Texte propre d'une page (pour llms-full.txt)."""
+    m = re.search(r"<main[^>]*>(.*?)</main>", h, re.S)
+    b = m.group(1) if m else h
+    b = re.sub(r"<(script|style|svg|form|nav|noscript|button|select|figure)\b.*?</\1>", "", b, flags=re.S)
+    b = re.sub(r'<div class="(ticket|lead-done|bx-inline|bx-sticky|bx-quiz)".*?</div>\s*</div>', "", b, flags=re.S)
+    def link(m):
+        u, t = m.group(1), _txt(m.group(2))
+        if not t: return ""
+        if u.startswith("/"): u = base + u
+        return f"[{t}]({u})" if u.startswith("http") else t
+    b = re.sub(r'<a [^>]*href="([^"]*)"[^>]*>(.*?)</a>', link, b, flags=re.S)
+    def row(m):
+        cells = [_txt(c) for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", m.group(1), re.S)]
+        return "| " + " | ".join(cells) + " |\n"
+    b = re.sub(r"<tr[^>]*>(.*?)</tr>", row, b, flags=re.S)
+    for tag, pre in (("h1", "# "), ("h2", "## "), ("h3", "### "), ("summary", "### ")):
+        b = re.sub(rf"<{tag}[^>]*>(.*?)</{tag}>", lambda m, pre=pre: f"\n\n{pre}{_txt(m.group(1))}\n\n", b, flags=re.S)
+    b = re.sub(r"<li[^>]*>(.*?)</li>", lambda m: f"\n- {_txt(m.group(1))}", b, flags=re.S)
+    b = re.sub(r"<(strong|b)>(.*?)</\1>", lambda m: f"**{_txt(m.group(2))}**", b, flags=re.S)
+    b = re.sub(r"</(p|div|section|ul|ol|table|blockquote|details)>", "\n\n", b)
+    b = re.sub(r"<br\s*/?>", "\n", b)
+    b = _html.unescape(re.sub(r"<[^>]+>", "", b))
+    b = "\n".join(l.strip() for l in b.split("\n"))
+    return re.sub(r"\n{3,}", "\n\n", b).strip()
+
+
 # ------------------------------------------------------------------ traitement d'une page
 def process(path, slug, mode, versions):
     h = open(path, encoding="utf-8").read()
@@ -250,6 +307,11 @@ def process(path, slug, mode, versions):
         if '<ul class="hero-proofs">' in h:
             i = h.index("</ul>", h.index('<ul class="hero-proofs">')) + 5
             h = h[:i] + "\n      " + line + h[i:]
+        mi = h.index("<main")
+        ends = [x.end() for x in re.finditer(r"</section>", h[mi:])]
+        if len(ends) >= 2 and 'id="diagnostic"' not in h:
+            k = mi + ends[1]
+            h = h[:k] + "\n" + quiz_block() + h[k:]
         cb = cases_block()
         if cb:
             i = h.rfind('<section class="cta-band')
@@ -270,6 +332,16 @@ def process(path, slug, mode, versions):
             i = h.index(mk) + len(mk)
             j = h.index('<div class="author-box">', i) if '<div class="author-box">' in h[i:] else len(h)
             body = h[i:j]
+            heads = []
+            def hid(m):
+                t = _txt(m.group(2)); i_ = _slug(t)
+                while i_ in [x[0] for x in heads]: i_ += "-2"
+                heads.append((i_, t))
+                return f'<h2 id="{i_}"{m.group(1)}>{m.group(2)}</h2>'
+            body = re.sub(r"<h2(?![^>]*\bid=)([^>]*)>(.*?)</h2>", hid, body, flags=re.S)
+            if len(heads) >= 3:
+                brief += ('\n    <nav class="bx-toc" aria-label="Sommaire"><strong>Dans cet article</strong><ol>' +
+                          "".join(f'<li><a href="#{i_}">{_html.escape(t, quote=False)}</a></li>' for i_, t in heads) + "</ol></nav>")
             pos = [x.start() for x in re.finditer(r"<h2", body)]
             if len(pos) >= 3:
                 cta = (f'<div class="bx-inline"><p>Votre contrat couvre-t-il ce cas ?<small>Un conseiller le vérifie gratuitement et vous répond sous 24 h ouvrées.</small></p>'
@@ -310,6 +382,8 @@ def process(path, slug, mode, versions):
     ml = re.search(r'<li><a href="([^"]*mentions-legales[^"]*)">', h)
     if ml and "Qui sommes-nous</a></li>" not in h:
         h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li>' + ml.group(0), 1)
+    if is_art:
+        h = h.replace("<header", '<div class="bx-progress" aria-hidden="true"><i></i></div>\n<header', 1)
     if slug != "mentions-legales":
         bar = (f'<div class="bx-sticky"><a class="call" href="tel:+33187667031" aria-label="Appeler le 01 87 66 70 31">Appeler</a>'
                f'<a class="go" href="{target}">Étude gratuite en 2 minutes</a></div>\n')
@@ -403,5 +477,11 @@ def run(out, mode):
     if arts:
         L += ["", "## Guides et articles", ""] + [f"- [{clean(t)}]({url(s)}) : {d}" for s, t, d in arts]
     L += ["", "## Le cabinet", "", f"- [Qui sommes-nous]({url('a-propos')})", f"- [WealthWise Conseil]({WWC}/) : site du cabinet", ""]
+    L += ["## Contenu complet", "", f"- [Tout le contenu du site en un seul fichier texte]({CFG.DOMAIN}/llms-full.txt)", ""]
     open(os.path.join(out, "llms.txt"), "w", encoding="utf-8").write("\n".join(L))
+    full = [f"# {CFG.BRAND} : contenu complet", "", f"Source : {CFG.DOMAIN}/ (marque de WealthWise Conseil, courtier en assurance, ORIAS 24000251). Auteur : Nicolas Ferran.", ""]
+    for sl, t, d in [home] + fixed + arts:
+        md = html2md(open(os.path.join(out, sl + ".html"), encoding="utf-8").read(), CFG.DOMAIN)
+        full += ["", "---", "", f"Page : {url(sl)}", "", md, ""]
+    open(os.path.join(out, "llms-full.txt"), "w", encoding="utf-8").write("\n".join(full))
     print("boost OK :", len(pages), "pages, llms.txt, robots.txt")

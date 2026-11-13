@@ -30,3 +30,61 @@
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
 })();
+
+/* ---- boost : diagnostic express, progression de lecture ---- */
+(function () {
+  var box = document.querySelector('[data-quiz]');
+  if (box) {
+    var items = [].map.call(box.querySelectorAll('.bx-quiz-list li'), function (li) {
+      return { q: li.querySelector('strong').textContent, t: li.dataset.t, x: li.dataset.x, na: li.dataset.na === '1' };
+    });
+    var ans = [], i = 0, view = document.createElement('div'); box.appendChild(view); box.classList.add('on');
+    function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+    function ask() {
+      view.innerHTML = '';
+      var top = el('div', 'bx-q-top'); top.appendChild(el('span', '', 'Question ' + (i + 1) + ' sur ' + items.length));
+      var dots = el('div', 'bx-q-dots'); items.forEach(function (_, k) { var d = el('i', k <= i ? 'd' : ''); dots.appendChild(d); }); top.appendChild(dots);
+      view.appendChild(top); view.appendChild(el('p', 'bx-q-text', items[i].q));
+      var row = el('div', 'bx-q-ans');
+      [['Oui', 'oui'], ['Non', 'non'], ['Je ne sais pas', 'nsp']].concat(items[i].na ? [['Pas de cadre', 'na']] : []).forEach(function (o) {
+        var b = el('button', '', o[0]); b.type = 'button';
+        b.addEventListener('click', function () { ans[i] = o[1]; i++; if (i < items.length) ask(); else result(); });
+        row.appendChild(b);
+      });
+      view.appendChild(row);
+    }
+    function result() {
+      var ok = ans.filter(function (a) { return a === 'oui' || a === 'na'; }).length, n = items.length, bad = n - ok;
+      view.innerHTML = '';
+      var res = el('div', 'bx-q-res'), C = 2 * Math.PI * 52;
+      res.innerHTML = '<svg class="bx-ring" viewBox="0 0 132 132" role="img" aria-label="' + ok + ' point(s) sur ' + n + ' en règle"><circle class="bg" cx="66" cy="66" r="52"/><circle class="fg" cx="66" cy="66" r="52" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '"/><text x="66" y="76" text-anchor="middle">' + ok + '/' + n + '</text></svg>';
+      var txt = el('div');
+      txt.appendChild(el('h3', '', bad === 0 ? 'Tout semble en ordre.' : bad + ' point' + (bad > 1 ? 's' : '') + ' à vérifier'));
+      txt.appendChild(el('p', '', bad === 0 ? 'Reste à savoir si vous payez le bon prix : un comparatif gratuit le dit en quelques jours.' : 'Rien de grave si on s\'en occupe maintenant. Un conseiller reprend ces points avec vous, gratuitement.'));
+      res.appendChild(txt);
+      var ul = el('ul', 'bx-q-issues');
+      items.forEach(function (it, k) {
+        var good = ans[k] === 'oui' || ans[k] === 'na', li = el('li', good ? 'ok' : '');
+        li.appendChild(el('strong', '', (good ? 'En règle : ' : 'À vérifier : ') + it.t)); if (!good) li.appendChild(el('span', '', it.x)); ul.appendChild(li);
+      });
+      res.appendChild(ul);
+      var cta = el('div', 'bx-q-cta'), go = el('a', 'btn btn-red', 'Faire vérifier ces points gratuitement'); go.href = '#etude';
+      go.addEventListener('click', function () {
+        var form = document.querySelector('#etude form.lead-form'); if (!form) return;
+        var m = form.elements.message; if (!m) { m = document.createElement('input'); m.type = 'hidden'; m.name = 'message'; form.appendChild(m); }
+        m.value = 'Diagnostic express : ' + items.map(function (it, k) { return it.t + ' = ' + ans[k]; }).join(' ; ');
+        [].forEach.call(form.querySelectorAll('input[name=besoin]'), function (r) { if (/audit/i.test(r.value)) r.checked = true; });
+      });
+      var again = el('button', 'link', 'Recommencer'); again.type = 'button'; again.addEventListener('click', function () { ans = []; i = 0; ask(); });
+      cta.appendChild(go); cta.appendChild(again); res.appendChild(cta); view.appendChild(res);
+      setTimeout(function () { res.querySelector('.fg').setAttribute('stroke-dashoffset', C * (1 - ok / n)); }, 60);
+      if (window.gtag) try { gtag('event', 'diagnostic_termine', { site: CONFIG.site, score: ok }); } catch (e) {}
+    }
+    ask();
+  }
+  var pr = document.querySelector('.bx-progress i'), art = document.querySelector('article');
+  if (pr && art) {
+    var upd = function () { var r = art.getBoundingClientRect(), tot = r.height - window.innerHeight; pr.style.width = Math.max(0, Math.min(100, tot > 0 ? (-r.top / tot) * 100 : 0)) + '%'; };
+    window.addEventListener('scroll', upd, { passive: true }); upd();
+  }
+})();

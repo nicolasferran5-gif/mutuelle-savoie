@@ -63,3 +63,7 @@ Oui, sur une ligne WhatsApp dédiée, avec une réponse garantie en 15 minutes d
 
 - [Qui sommes-nous](https://www.mutuelle-savoie.fr/a-propos)
 - [WealthWise Conseil](https://www.wealthwiseconseil.fr/) : site du cabinet
+
+## Contenu complet
+
+- [Tout le contenu du site en un seul fichier texte](https://www.mutuelle-savoie.fr/llms-full.txt)
