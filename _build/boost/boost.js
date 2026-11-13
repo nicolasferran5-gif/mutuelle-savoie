@@ -149,3 +149,36 @@
   }
   day.addEventListener('input', calc); anc.addEventListener('change', calc); calc();
 })();
+
+/* ---- boost : calculateur de coût employeur, check-list ---- */
+(function () {
+  var box = document.querySelector('[data-calc]');
+  if (box) {
+    var q = function (s) { return box.querySelector(s); }, eur = function (v) { return v.toFixed(2).replace('.', ',') + ' \u20ac'; };
+    var run = function () {
+      var cot = Math.max(0, +q('[data-c-cot]').value || 0), part = +q('[data-c-part]').value, n = Math.max(1, Math.round(+q('[data-c-n]').value || 1));
+      var emp = cot * part / 100, fs = n >= 11 ? emp * 0.08 : 0, tot = (emp + fs) * n;
+      q('[data-c-pv]').textContent = part; q('[data-c-emp]').textContent = eur(emp);
+      q('[data-c-fs]').textContent = n >= 11 ? eur(fs) + ' par salarié' : 'Non dû (moins de 11 salariés)';
+      q('[data-c-tot]').textContent = eur(tot); q('[data-c-an]').textContent = eur(tot * 12);
+      q('[data-c-sal]').textContent = eur(cot - emp); q('[data-c-csg]').textContent = eur(emp * 0.097);
+    };
+    box.addEventListener('input', run); run();
+  }
+  var ck = document.querySelector('[data-check]');
+  if (ck) {
+    var boxes = [].slice.call(ck.querySelectorAll('[data-ck]')), KEY = 'bx-checklist';
+    var saved = []; try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+    boxes.forEach(function (b) { if (saved.indexOf(b.dataset.ck) >= 0) b.checked = true; });
+    var upd = function () {
+      var on = boxes.filter(function (b) { return b.checked; }), n = on.length, t = boxes.length;
+      ck.querySelector('[data-ck-n]').textContent = n + ' sur ' + t;
+      ck.querySelector('[data-ck-bar]').style.width = (n / t * 100) + '%';
+      ck.querySelector('[data-ck-msg]').textContent = n === t ? 'Dossier complet. Pensez à le revérifier chaque début d\'année.' : n === 0 ? 'Cochez les documents que vous avez sous la main.' : 'Il vous manque ' + (t - n) + ' document' + (t - n > 1 ? 's' : '') + '. Nous pouvons les préparer avec vous.';
+      try { localStorage.setItem(KEY, JSON.stringify(on.map(function (b) { return b.dataset.ck; }))); } catch (e) {}
+    };
+    ck.addEventListener('change', upd); upd();
+    ck.querySelector('[data-ck-print]').addEventListener('click', function () { window.print(); });
+    ck.querySelector('[data-ck-reset]').addEventListener('click', function () { boxes.forEach(function (b) { b.checked = false; }); upd(); });
+  }
+})();

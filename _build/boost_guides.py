@@ -153,6 +153,9 @@ GUIDES = [
 <tr><td>Seconde période</td><td>Deux tiers du salaire brut</td><td>30 jours, plus 10 jours par tranche de 5 ans d'ancienneté</td></tr>
 </tbody></table></div>
 <p>Chaque période est plafonnée à 90 jours. En cas de maladie ordinaire, le versement commence après 7 jours d'arrêt. Beaucoup de conventions prévoient mieux : une ancienneté plus courte, un délai réduit ou un taux supérieur.</p>
+<h2>Simulateur : qui paie quoi pendant un arrêt maladie ?</h2>
+<p>Choisissez l'ancienneté du salarié et déplacez le curseur : vous voyez d'où vient son revenu, jour après jour, selon la loi.</p>
+{sim}
 <h2>Comment la prévoyance prend-elle le relais ?</h2>
 <p>Le contrat de prévoyance intervient de deux façons. Il peut rembourser à l'employeur le maintien de salaire qu'il verse, ce qui protège la trésorerie d'une petite entreprise. Et il prend la suite quand le maintien de salaire s'arrête, pour que le salarié ne tombe pas aux seules indemnités de la Sécurité sociale. Le point à surveiller est la franchise : le nombre de jours après lequel l'assureur commence à payer doit correspondre à la fin du maintien de salaire.</p>
 <h2>Combien coûte une prévoyance ?</h2>
@@ -196,6 +199,9 @@ GUIDES = [
 <tr><td>Part du salarié</td><td>50 % de 50 €</td><td>25,00 €</td></tr>
 <tr><td>CSG et CRDS retenues au salarié</td><td>9,70 % de 25 €</td><td>2,43 €</td></tr>
 </tbody></table></div>
+<h2>Calculez votre coût employeur</h2>
+<p>Saisissez la cotisation de votre contrat, la part que vous prenez en charge et votre effectif.</p>
+{calc}
 <h2>Qu'est-ce qui fait varier le prix d'un contrat ?</h2>
 <ul>
 <li><strong>le niveau de garanties</strong> : minimum de la branche ou couverture renforcée ;</li>
@@ -211,6 +217,134 @@ GUIDES = [
             ("Quelle est la part minimale de l'employeur dans la mutuelle d'entreprise ?", "50 % de la cotisation correspondant à la couverture obligatoire du salarié. La convention collective peut prévoir davantage."),
             ("Le forfait social s'applique-t-il aux petites entreprises ?", "Non. Le forfait social de 8 % sur la part employeur de la mutuelle et de la prévoyance ne concerne que les entreprises de 11 salariés et plus."),
             ("La mutuelle d'entreprise est-elle déductible pour l'employeur ?", "Oui. La part employeur est une charge déductible du résultat de l'entreprise. Elle est en outre exonérée de cotisations de Sécurité sociale dans une limite annuelle, si le contrat est collectif, obligatoire et responsable."),
+        ],
+    },
+    {
+        "slug": "portabilite-mutuelle-prevoyance",
+        "cat": "Départ d'un salarié",
+        "title": "Portabilité de la mutuelle et de la prévoyance : les règles pour l'employeur",
+        "desc": "Qui y a droit, pendant combien de temps, qui paie et ce que l'employeur doit faire au départ d'un salarié : la portabilité expliquée étape par étape.",
+        "body": """
+<p class="lead-p">Quand un salarié quitte l'entreprise, il peut garder gratuitement sa mutuelle et sa prévoyance pendant un temps. Pour les employeurs {pub}, où les départs sont fréquents, c'est une formalité à ne pas oublier.</p>
+<h2>Qu'est-ce que la portabilité ?</h2>
+<p>C'est le maintien, sans cotisation, des garanties de mutuelle et de prévoyance de l'entreprise au profit d'un ancien salarié indemnisé par l'assurance chômage. Elle existe dans toutes les entreprises du secteur privé.</p>
+<h2>Qui y a droit ?</h2>
+<p>L'ancien salarié doit remplir trois conditions :</p>
+<ul>
+<li>son contrat de travail a pris fin pour un motif ouvrant droit à l'assurance chômage : licenciement, sauf faute lourde, rupture conventionnelle, fin de contrat à durée déterminée, démission reconnue légitime ;</li>
+<li>il était couvert par le contrat de l'entreprise avant son départ ;</li>
+<li>il justifie auprès de l'assureur de sa prise en charge par l'assurance chômage.</li>
+</ul>
+<p>Un salarié qui avait fait valoir une dispense n'a pas droit à la portabilité de la mutuelle.</p>
+<h2>Combien de temps dure-t-elle ?</h2>
+<p>Aussi longtemps que le dernier contrat de travail, ou que les derniers contrats successifs chez le même employeur, dans la limite de <strong>12 mois</strong>. Elle s'arrête plus tôt si l'ancien salarié retrouve un emploi ou cesse d'être indemnisé.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Durée du dernier contrat</th><th>Durée de la portabilité</th></tr></thead>
+<tbody>
+<tr><td>2 mois</td><td>2 mois</td></tr>
+<tr><td>8 mois</td><td>8 mois</td></tr>
+<tr><td>3 ans</td><td>12 mois (plafond)</td></tr>
+</tbody></table></div>
+<h2>Qui paie ?</h2>
+<p>Ni l'ancien salarié, ni l'employeur directement : le coût est mutualisé, c'est-à-dire intégré aux cotisations payées par l'entreprise et les salariés en poste.</p>
+<h2>Ce que l'employeur doit faire</h2>
+<ol>
+<li><strong>Mentionner la portabilité sur le certificat de travail</strong> remis au salarié.</li>
+<li><strong>Informer l'assureur</strong> de la fin du contrat de travail.</li>
+<li><strong>Conserver la trace</strong> de ces deux démarches.</li>
+</ol>
+<div class="callout"><strong>À retenir</strong>Si l'employeur oublie d'informer le salarié ou l'assureur et que l'ancien salarié se retrouve sans couverture, celui-ci peut lui demander réparation.</div>
+<h2>Quelles garanties sont maintenues ?</h2>
+<p>Celles en vigueur dans l'entreprise : si le contrat change pendant la période, l'ancien salarié suit le nouveau contrat. Ses ayants droit déjà couverts restent couverts. En prévoyance, les indemnités versées ne peuvent pas dépasser le montant des allocations chômage qu'il aurait perçues.</p>
+<h2>Et après la portabilité ?</h2>
+<p>L'ancien salarié peut demander à l'assureur, dans les six mois, un contrat individuel aux garanties proches, à tarif encadré les premières années. C'est une démarche personnelle, qui ne concerne plus l'employeur.</p>
+""",
+        "faq": [
+            ("La portabilité de la mutuelle est-elle payante pour l'ancien salarié ?", "Non. Elle est gratuite pour lui : son coût est intégré aux cotisations de l'entreprise et des salariés en poste."),
+            ("Un salarié qui démissionne a-t-il droit à la portabilité ?", "Seulement si sa démission est reconnue légitime par l'assurance chômage et qu'il est indemnisé. Une démission ordinaire n'ouvre pas droit à la portabilité."),
+            ("Combien de temps dure la portabilité ?", "Une durée égale à celle du dernier contrat de travail, dans la limite de 12 mois."),
+        ],
+    },
+    {
+        "slug": "versement-sante-contrats-courts",
+        "cat": "Contrats courts",
+        "title": "Versement santé : l'aide de l'employeur pour les contrats courts et les temps très partiels",
+        "desc": "Qui a droit au versement santé, comment le calculer en 2026 (montant de référence de 22,27 €, coefficients de 105 % et 125 %) et comment le mettre en place.",
+        "body": """
+<p class="lead-p">Certains salariés ne restent pas assez longtemps, ou ne travaillent pas assez d'heures, pour que la mutuelle de l'entreprise ait un sens. Pour eux existe le versement santé. Les employeurs {pub} y recourent souvent pour les contrats très courts.</p>
+<h2>Qu'est-ce que le versement santé ?</h2>
+<p>Une somme versée chaque mois par l'employeur à un salarié qui n'est pas couvert par la mutuelle de l'entreprise, pour l'aider à payer sa mutuelle personnelle. Elle remplace la part employeur qu'il n'a pas reçue.</p>
+<h2>Quels salariés sont concernés ?</h2>
+<ul>
+<li>les salariés en contrat à durée déterminée ou en contrat de mission dont la durée ne dépasse pas <strong>3 mois</strong> ;</li>
+<li>les salariés à temps partiel dont la durée de travail ne dépasse pas <strong>15 heures par semaine</strong>.</li>
+</ul>
+<p>Ils doivent être couverts par ailleurs par un contrat de complémentaire santé responsable, qu'ils financent eux-mêmes, et en justifier. Le salarié qui bénéficie de la complémentaire santé solidaire ou d'une autre couverture collective obligatoire n'y a pas droit.</p>
+<h2>Comment se met-il en place ?</h2>
+<p>De deux façons : soit le salarié demande à être dispensé de la mutuelle de l'entreprise et réclame le versement santé, ce qui est un droit pour lui ; soit un accord de branche ou d'entreprise, ou à défaut une décision de l'employeur, prévoit que ces salariés sont couverts par ce moyen plutôt que par le contrat collectif.</p>
+<h2>Comment le calculer en 2026 ?</h2>
+<p>Le versement est égal à un montant de référence multiplié par un coefficient.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Élément</th><th>Valeur 2026</th></tr></thead>
+<tbody>
+<tr><td>Montant de référence</td><td>La contribution que l'employeur aurait payée pour ce salarié ; à défaut de pouvoir la déterminer, un forfait de 22,27 € par mois (7,44 € en Alsace-Moselle)</td></tr>
+<tr><td>Proratisation</td><td>Selon les heures travaillées dans le mois, rapportées à 151,67 heures</td></tr>
+<tr><td>Coefficient pour un contrat à durée indéterminée</td><td>105 %</td></tr>
+<tr><td>Coefficient pour un contrat à durée déterminée ou de mission</td><td>125 %</td></tr>
+</tbody></table></div>
+<h2>Un exemple</h2>
+<p>Un salarié en contrat à durée déterminée d'un mois travaille 60 heures. Avec le forfait de référence : 22,27 € × 60 ÷ 151,67 = 8,81 €, puis 8,81 € × 125 % = <strong>11,01 €</strong> de versement santé pour le mois.</p>
+<h2>Quel est son régime social ?</h2>
+<p>Le versement santé suit le même régime que la part employeur d'une mutuelle collective : exonéré de cotisations de Sécurité sociale dans les mêmes limites, soumis à la CSG et à la CRDS, et au forfait social dans les entreprises de 11 salariés et plus.</p>
+<h2>Les erreurs à éviter</h2>
+<ul>
+<li>verser l'aide sans avoir le justificatif de la mutuelle personnelle du salarié ;</li>
+<li>oublier la proratisation selon les heures ;</li>
+<li>appliquer le versement santé à un salarié qui ne remplit pas les conditions de durée.</li>
+</ul>
+<p>Les règles propres à votre branche figurent dans <a href="{ob}">notre page sur vos obligations</a>.</p>
+""",
+        "faq": [
+            ("Le versement santé est-il obligatoire ?", "Oui, dès qu'un salarié qui remplit les conditions le demande et justifie d'une mutuelle responsable personnelle. L'employeur ne peut pas le refuser."),
+            ("Quel est le montant de référence du versement santé en 2026 ?", "À défaut de pouvoir déterminer la contribution de l'employeur, le forfait est de 22,27 € par mois, ou 7,44 € en Alsace-Moselle, à proratiser selon les heures travaillées."),
+            ("Un apprenti peut-il recevoir le versement santé ?", "Oui, s'il est en contrat de 3 mois au plus ou travaille 15 heures par semaine au plus, et s'il justifie d'une mutuelle responsable personnelle."),
+        ],
+    },
+    {
+        "slug": "protection-sociale-dirigeant",
+        "cat": "Dirigeant",
+        "title": "Mutuelle et prévoyance du dirigeant : gérant majoritaire ou président de SAS",
+        "desc": "Le dirigeant est-il couvert par le contrat de ses salariés ? Statut de travailleur non salarié ou d'assimilé salarié, contrats « Madelin », arrêt de travail : les règles.",
+        "body": """
+<p class="lead-p">Beaucoup de dirigeants {pub} découvrent le jour d'un arrêt de travail qu'ils n'étaient pas couverts comme leurs salariés. Tout dépend du statut social.</p>
+<h2>Le dirigeant est-il couvert par le contrat de ses salariés ?</h2>
+<p>Cela dépend de son statut. Un dirigeant affilié au régime général, dit assimilé salarié, peut rejoindre le contrat collectif sous conditions. Un travailleur non salarié ne le peut pas : il doit souscrire ses propres contrats.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Dirigeant</th><th>Statut social</th><th>Mutuelle et prévoyance</th></tr></thead>
+<tbody>
+<tr><td>Gérant majoritaire de SARL, gérant d'EURL associé unique, entrepreneur individuel</td><td>Travailleur non salarié</td><td>Contrats personnels, déductibles sous conditions</td></tr>
+<tr><td>Président de SAS ou de SASU, gérant minoritaire ou égalitaire de SARL rémunéré</td><td>Assimilé salarié</td><td>Peut être couvert par le contrat collectif de l'entreprise, sous conditions</td></tr>
+</tbody></table></div>
+<h2>Le travailleur non salarié</h2>
+<p>Sa protection de base est plus faible que celle d'un salarié, surtout en cas d'arrêt de travail et d'invalidité. Il complète par des contrats individuels de mutuelle et de prévoyance, souvent appelés contrats « Madelin ». Leurs cotisations sont déductibles du revenu professionnel, dans des limites qui dépendent de ce revenu.</p>
+<h2>L'assimilé salarié</h2>
+<p>Le président de SAS rémunéré cotise au régime général, mais pas à l'assurance chômage. Il peut bénéficier du contrat collectif de l'entreprise si l'acte de mise en place le prévoit et si la décision est régulièrement prise par l'organe compétent de la société. Il relève alors, en général, de la catégorie des cadres, avec la prévoyance correspondante.</p>
+<div class="callout"><strong>Point de vigilance</strong>Un président de SAS qui ne se verse pas de rémunération n'acquiert pas de droits aux indemnités journalières. La mutuelle collective peut lui rester ouverte, mais la prévoyance calculée sur le salaire ne lui verserait rien.</div>
+<h2>Que se passe-t-il en cas d'arrêt de travail ?</h2>
+<p>Le dirigeant ne bénéficie pas du maintien de salaire que la loi impose pour les salariés, sauf s'il cumule son mandat avec un vrai contrat de travail. Sans prévoyance, son revenu peut chuter dès les premiers jours, alors que les charges de l'entreprise continuent.</p>
+<h2>Les trois garanties à regarder</h2>
+<ul>
+<li><strong>les indemnités journalières</strong> en cas d'arrêt, avec une franchise adaptée à votre trésorerie ;</li>
+<li><strong>la rente d'invalidité</strong>, en vérifiant comment le contrat définit l'invalidité : par rapport à votre métier, ou à tout métier ;</li>
+<li><strong>le capital décès</strong>, et la garantie des frais généraux, qui paie les charges fixes de l'entreprise pendant votre arrêt.</li>
+</ul>
+<h2>Et le conjoint qui travaille dans l'entreprise ?</h2>
+<p>Le conjoint doit avoir un statut : collaborateur, salarié ou associé. Sa protection sociale en dépend entièrement. Un conjoint salarié est couvert comme les autres salariés ; un conjoint collaborateur relève du régime des indépendants et a besoin de ses propres contrats.</p>
+""",
+        "faq": [
+            ("Un gérant majoritaire de SARL peut-il adhérer à la mutuelle de ses salariés ?", "Non. Travailleur non salarié, il n'entre pas dans le contrat collectif des salariés et doit souscrire une mutuelle et une prévoyance individuelles, déductibles sous conditions."),
+            ("Un président de SAS est-il couvert par la prévoyance de l'entreprise ?", "Il peut l'être s'il est rémunéré, si l'acte de mise en place l'inclut et si la société l'a décidé régulièrement. Sans rémunération, une prévoyance calculée sur le salaire ne lui verse rien."),
+            ("Qu'est-ce qu'un contrat Madelin ?", "Un contrat de mutuelle, de prévoyance ou de retraite souscrit par un travailleur non salarié, dont les cotisations sont déductibles de son revenu professionnel dans certaines limites."),
         ],
     },
 ]

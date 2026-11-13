@@ -405,7 +405,23 @@ def arret_block():
     return f"""<section class="band bg-cream2" id="arret-de-travail">
   <div class="wrap">
     <div class="sec-head"><span class="t-label">Simulateur</span><h2>Un salarié est en arrêt maladie : qui paie quoi, jour après jour ?</h2><p>Déplacez le curseur pour voir d'où vient le revenu du salarié selon la loi. C'est là que la prévoyance fait la différence.</p></div>
-    <div class="bx-arret" data-arret>
+    {arret_widget()}
+  </div>
+</section>
+"""
+
+
+PICTOS = [f'<svg class="ill bx-picto" viewBox="0 0 24 24" aria-hidden="true">{d}</svg>' for d in (
+    '<path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6M9 10h.01M15 10h.01"/>',
+    '<path d="M7 3v8a2 2 0 0 0 4 0V3M9 11v10M17 3c-2 2-3 5-3 8h3v10"/>',
+    '<path d="M5 8h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5ZM17 10h2a2 2 0 0 1 0 4h-2M8 3v2M12 3v2"/>',
+    '<path d="M12 3 4 6v6c0 5 3.500 8 8 9 4.500-1 8-4 8-9V6ZM9 12l2 2 4-4"/>',
+    '<path d="M16 19v-1a4 4 0 0 0-8 0v1M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6M20 19v-1a3 3 0 0 0-2-2.800M4 19v-1a3 3 0 0 1 2-2.800"/>',
+    '<path d="M6 3h9l4 4v14H6ZM14 3v5h5M9 13h7M9 17h5"/>')]
+
+
+def arret_widget():
+    return """<div class="bx-arret" data-arret>
       <div class="bx-arret-ctrl">
         <label><span class="lbl">Ancienneté du salarié</span>
           <select data-anc><option value="0">Moins d'un an</option><option value="1" selected>1 à 5 ans</option><option value="6">6 à 10 ans</option><option value="11">11 à 15 ans</option><option value="16">16 à 20 ans</option><option value="21">21 à 25 ans</option><option value="26">26 à 30 ans</option><option value="31">31 ans et plus</option></select></label>
@@ -423,9 +439,73 @@ def arret_block():
       </div>
       <p class="bx-arret-note">Règles légales pour une maladie ordinaire (Code du travail) : indemnités de la Sécurité sociale égales à 50 % du salaire journalier de base, dans la limite de leur plafond, à partir du 4e jour ; complément de l'employeur à partir du 8e jour, pour les salariés ayant au moins un an d'ancienneté. Pourcentages du salaire brut, à titre indicatif. Votre convention collective peut prévoir mieux.</p>
       <a class="btn btn-red" href="#etude">Vérifier ce que couvre mon contrat</a>
+    </div>"""
+
+
+def calc_widget():
+    return """<div class="bx-calc" data-calc>
+      <div class="bx-calc-in">
+        <label><span class="lbl">Cotisation mensuelle par salarié (€)</span><input type="number" min="10" max="400" step="1" value="50" data-c-cot inputmode="decimal"></label>
+        <label><span class="lbl">Part payée par l'employeur : <strong data-c-pv>50</strong> %</span><input type="range" min="50" max="100" step="5" value="50" data-c-part aria-label="Part employeur"></label>
+        <label><span class="lbl">Nombre de salariés couverts</span><input type="number" min="1" max="500" step="1" value="8" data-c-n inputmode="numeric"></label>
+      </div>
+      <dl class="bx-calc-out">
+        <div><dt>Part employeur, par salarié et par mois</dt><dd data-c-emp></dd></div>
+        <div><dt>Forfait social (8 %, à partir de 11 salariés)</dt><dd data-c-fs></dd></div>
+        <div class="tot"><dt>Coût total pour l'employeur, par mois</dt><dd data-c-tot></dd></div>
+        <div class="tot"><dt>Soit par an</dt><dd data-c-an></dd></div>
+        <div><dt>Part du salarié, par mois</dt><dd data-c-sal></dd></div>
+        <div><dt>CSG et CRDS retenues au salarié sur la part employeur (9,70 %)</dt><dd data-c-csg></dd></div>
+      </dl>
+      <p class="bx-arret-note">Calcul indicatif à partir de la cotisation que vous saisissez. Le seuil de 11 salariés s'apprécie sur l'effectif de l'entreprise ; nous prenons ici le nombre de salariés couverts. Votre convention peut imposer une part employeur supérieure à 50 %.</p>
+    </div>"""
+
+
+CHECK = [
+    ("L'écrit qui met en place le régime", "Décision de l'employeur, accord collectif ou référendum, daté et signé, pour la mutuelle comme pour la prévoyance."),
+    ("La preuve de remise à chaque salarié", "Liste d'émargement ou accusé de réception : sans elle, l'écrit n'est pas opposable."),
+    ("La notice d'information de l'assureur", "Remise à chaque salarié à l'embauche et à chaque changement de garanties."),
+    ("Le contrat et le tableau de garanties à jour", "La version en vigueur, conforme aux dernières règles de votre convention collective."),
+    ("Les demandes de dispense, écrites et signées", "Une par salarié non affilié, avec le cas de dispense invoqué."),
+    ("Les justificatifs des dispenses, renouvelés chaque année", "Attestation de l'autre mutuelle, de la complémentaire santé solidaire ou du contrat du conjoint."),
+    ("Les bulletins d'affiliation des salariés", "Y compris ceux des salariés à temps partiel, des apprentis et des contrats courts."),
+    ("Le contrat de prévoyance des cadres", "Au moins 1,50 % de la tranche A du salaire, à la charge de l'employeur."),
+    ("La mention de la portabilité sur les certificats de travail", "À chaque départ ouvrant droit à l'assurance chômage."),
+    ("L'avis du comité social et économique, s'il existe", "Il est informé et consulté avant la mise en place ou la modification des garanties."),
+    ("Les bulletins de paie cohérents avec le contrat", "Mêmes taux, même répartition employeur et salarié que dans l'écrit de mise en place."),
+    ("Une vérification annuelle de conformité", "Les conventions évoluent : un contrôle chaque début d'année évite les écarts."),
+]
+
+
+def checklist_main(href):
+    lis = "".join(f'<li><label><input type="checkbox" data-ck="{i}"><span><strong>{t}</strong><em>{d}</em></span></label></li>' for i, (t, d) in enumerate(CHECK))
+    return f"""<main id="contenu">
+<section class="page-hero bg-cream">
+  <div class="wrap" style="grid-template-columns:minmax(0,1fr)">
+    <div>
+      <span class="crumb"><a href="{href('index')}">Accueil</a> · Check-list</span>
+      <h1 class="kw-h1">Contrôle URSSAF : la check-list mutuelle et prévoyance de l'employeur</h1>
+      <p class="lead">Les {len(CHECK)} documents qu'un contrôleur peut demander. Cochez ceux que vous avez : la liste se souvient de vos réponses sur cet appareil, et rien n'est envoyé.</p>
     </div>
   </div>
 </section>
+<section class="band bg-cream" style="padding-top:36px">
+  <div class="wrap narrow">
+    <div class="bx-check" data-check>
+      <div class="bx-check-top"><strong data-ck-n>0 sur {len(CHECK)}</strong><div class="bx-bar"><i data-ck-bar style="width:0"></i></div></div>
+      <ol class="bx-check-list">{lis}</ol>
+      <p class="bx-check-msg" data-ck-msg></p>
+      <div class="bx-q-cta"><a class="btn btn-red" href="{href('devis')}">Faire vérifier mon dossier gratuitement</a><button type="button" class="link" data-ck-print>Imprimer la liste</button><button type="button" class="link" data-ck-reset>Tout décocher</button></div>
+    </div>
+    <div class="prose" style="margin-top:44px">
+      <h2>Pourquoi ces documents comptent</h2>
+      <p>La part de cotisation payée par l'employeur n'est exonérée de cotisations sociales que si le régime est collectif et obligatoire. Lors d'un contrôle, l'URSSAF ne juge pas la qualité des garanties : elle vérifie que ces caractères sont prouvés par écrit. Un document manquant peut suffire à remettre en cause l'exonération pour tous les salariés, sur les trois dernières années.</p>
+      <h2>Que faire s'il vous en manque ?</h2>
+      <p>La plupart des écarts se régularisent : rédiger ou mettre à jour l'écrit de mise en place, faire signer les dispenses, redemander les justificatifs. Mieux vaut le faire avant un contrôle qu'après. Nous reprenons le dossier avec vous et préparons les documents manquants.</p>
+    </div>
+  </div>
+</section>
+</main>
 """
 
 
@@ -488,7 +568,7 @@ def build_guides(out, mode, idx, t0, d0, ft):
     pub = getattr(CFG, "GUIDE_PUB", "") or CFG.PUBLIC
     for g in GD.GUIDES:
         title = g["title"].format(pub=pub)
-        body = g["body"].format(pub=pub, conv=CFG.CONVENTION, ob=ob)
+        body = g["body"].format(pub=pub, conv=CFG.CONVENTION, ob=ob, sim=arret_widget(), calc=calc_widget())
         faq = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in g["faq"])
         body += f"<h2>Questions fréquentes</h2>{faq}"
         mins = max(3, round(len(_txt(body).split()) / 210))
@@ -594,6 +674,7 @@ def process(path, slug, mode, versions, made=()):
                      ("source-serif-4-latin-wght-normal.woff2", "figtree-latin-wght-normal.woff2"))
         h = h.replace('<link rel="stylesheet" href="', pl + '<link rel="stylesheet" href="', 1)
         h = re.sub(r'(<span class="l2[^"]*">)(.*?)(</span>)', lambda m: m.group(1) + re.sub(r"<br\s*/?>", " ", m.group(2)) + m.group(3), h, count=1, flags=re.S)
+        pk = [0]
         def poster(m):
             ill = re.search(r'<svg class="ill".*?</svg>', m.group(2), re.S)
             go = re.search(r'<span class="go"[^>]*>(.*?)</span>', m.group(2), re.S)
@@ -601,7 +682,9 @@ def process(path, slug, mode, versions, made=()):
             if not (go and head): return m.group(0)
             parts = [_txt(x) for x in re.findall(r'<span class="(?:s|b|sc|c)\b[^"]*"[^>]*>(.*?)</span>', head.group(1), re.S)]
             label = re.sub(r"\s*→\s*$", "", _txt(go.group(1)))
-            return (f'<a class="poster" href="{m.group(1)}">{ill.group(0) if ill else ""}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
+            pk[0] += 1
+            ico = ill.group(0) if ill else PICTOS[(pk[0] - 1) % len(PICTOS)]
+            return (f'<a class="poster" href="{m.group(1)}">{ico}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
                     f'<span class="sc">{_html.escape(" ".join(parts), quote=False)}</span></div><span class="go">Voir la page</span></a>')
         h = re.sub(r'<a class="poster[^"]*" href="([^"]*)">(.*?)</a>', poster, h, flags=re.S)
         h = re.sub(r'<meta name="theme-color" content="[^"]*">', f'<meta name="theme-color" content="{versions["navy"]}">', h)
@@ -613,12 +696,21 @@ def process(path, slug, mode, versions, made=()):
         h = re.sub(r'(<span class="brand-name">)(.*?)(</span>)', lambda m: m.group(1) + (CFG.BRAND if _txt(m.group(2)).isupper() else m.group(2)) + m.group(3), h, flags=re.S)
 
     # H1 porteur du mot-clé sur les pages intérieures ; l'ancien titre devient le slogan
-    if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique", "guides"):
+    if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique", "guides", "check-list"):
         m = re.search(r'<h1([^>]*)>(.*?)</h1>\s*<p class="sub"([^>]*)>(.*?)</p>', h, re.S)
         if m and "art-h1" not in m.group(1):
             kw = _html.escape(re.sub(r"\s*·\s*[^·]+$", "", title), quote=False)
             slogan = (re.sub(r"<br\s*/?>", " ", m.group(2)).strip() + " " + m.group(4).strip()).strip()
             h = h.replace(m.group(0), f'<h1 class="kw-h1">{kw}</h1>\n      <p class="sub slogan"{m.group(3)}>{slogan}</p>', 1)
+
+    if made and not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique", "guides", "check-list", "blog", "devis") and "bx-guides" not in h:
+        k0 = sum(map(ord, slug)) % len(made)
+        pick = [made[(k0 + i) % len(made)] for i in range(3)]
+        cards = "".join(f'<a class="rule bx-guide" href="{href("guides/" + g["slug"])}"><span class="tag">{g["cat"]}</span><h3>{t}</h3><p>{g["desc"]}</p></a>' for g, t in pick)
+        rel = (f'<section class="band bg-cream2"><div class="wrap"><div class="sec-head"><span class="t-label">Pour aller plus loin</span><h2>Les guides utiles sur ce sujet</h2></div>'
+               f'<div class="rules bx-guides bx-g3">{cards}</div><p style="margin-top:26px"><a class="btn btn-navy" href="{href("guides")}">Tous les guides</a> &nbsp; <a href="{href("check-list")}" style="font-weight:600">La check-list URSSAF</a></p></div></section>\n')
+        i_ = h.rfind('<section class="cta-band')
+        if i_ > 0: h = h[:i_] + rel + h[i_:]
 
     # formulaires en 2 étapes ; le premier de la page porte l'ancre #etude
     h = TICKET_RE.sub(step_form, h)
@@ -726,7 +818,7 @@ def process(path, slug, mode, versions, made=()):
     # pied de page : lien « Qui sommes-nous » ; barre d'appel sur mobile
     ml = re.search(r'<li><a href="([^"]*mentions-legales[^"]*)">', h)
     if ml and "Qui sommes-nous</a></li>" not in h:
-        h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li><li><a href="{href("guides")}">Guides</a></li><li><a href="{href("lexique")}">Lexique</a></li>' + ml.group(0), 1)
+        h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li><li><a href="{href("guides")}">Guides</a></li><li><a href="{href("check-list")}">Check-list URSSAF</a></li><li><a href="{href("lexique")}">Lexique</a></li>' + ml.group(0), 1)
     if is_art:
         h = h.replace("<header", '<div class="bx-progress" aria-hidden="true"><i></i></div>\n<header', 1)
     if slug != "mentions-legales":
@@ -793,6 +885,15 @@ def run(out, mode):
     hl = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: '<script type="application/ld+json">' + json.dumps(lld, ensure_ascii=False) + "</script>", hl, count=1, flags=re.S)
     open(os.path.join(out, "lexique.html"), "w", encoding="utf-8").write(hl + lexique_main(href0) + ft)
 
+    ck_t = f"Contrôle URSSAF mutuelle et prévoyance : la check-list de l'employeur · {CFG.BRAND}"
+    ck_d = "Écrit de mise en place, dispenses, justificatifs, prévoyance des cadres, portabilité : les 12 documents à tenir prêts. Check-list interactive et imprimable."
+    hc = idx[:idx.index("<main")].replace(t0, _html.escape(ck_t, quote=True)).replace(d0, _html.escape(ck_d, quote=True))
+    hc = hc.replace(f'<link rel="canonical" href="{CFG.DOMAIN}/">', f'<link rel="canonical" href="{CFG.DOMAIN}/check-list">')
+    hc = hc.replace(f'<meta property="og:url" content="{CFG.DOMAIN}/">', f'<meta property="og:url" content="{CFG.DOMAIN}/check-list">').replace(' aria-current="page"', "")
+    cld = {"@context": "https://schema.org", "@type": "ItemList", "name": "Check-list mutuelle et prévoyance de l'employeur", "url": CFG.DOMAIN + "/check-list",
+           "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": t, "description": d} for i, (t, d) in enumerate(CHECK)]}
+    hc = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: '<script type="application/ld+json">' + json.dumps(cld, ensure_ascii=False) + "</script>", hc, count=1, flags=re.S)
+    open(os.path.join(out, "check-list.html"), "w", encoding="utf-8").write(hc + checklist_main(href0) + ft)
     made = build_guides(out, mode, idx, t0, d0, ft)
 
     # 3. toutes les pages
@@ -810,6 +911,9 @@ def run(out, mode):
     sm_p = os.path.join(out, "sitemap.xml")
     if os.path.exists(sm_p):
         sm = open(sm_p).read()
+        if "/check-list<" not in sm:
+            sm = sm.replace("</urlset>", f"  <url><loc>{CFG.DOMAIN}/check-list</loc><lastmod>{GD.MAJ}</lastmod></url>\n</urlset>")
+            open(sm_p, "w").write(sm)
         if "/guides<" not in sm:
             sm = sm.replace("</urlset>", f"  <url><loc>{CFG.DOMAIN}/guides</loc><lastmod>{GD.MAJ}</lastmod></url>\n" + "".join(
                 f"  <url><loc>{CFG.DOMAIN}/guides/{g['slug']}</loc><lastmod>{GD.MAJ}</lastmod></url>\n" for g, _ in made) + "</urlset>")
