@@ -299,4 +299,4 @@ td{border-bottom-color:var(--line)}
 }
 @media (max-width:560px){.band{padding-block:56px}.brand-name{font-size:1.25rem}.lead-form{padding:6px 20px 22px}.ticket-head{padding:20px 20px 10px}.bx-quiz,.bx-sit{padding:22px}.rule{padding:22px}.proof-band div{padding:18px}.proof-band strong{font-size:1.45rem}}
 .logo-mark,.site-head .logo-mark{width:46px!important;height:46px!important}
-.site-foot .logo-mark{background:#fff!important;border-radius:14px!important;padding:4px!important;width:50px!important;height:50px!important}
+.site-foot .logo-mark{background:#fff!important;border-radius:14px!important;padding:5px!important;width:50px!important;height:50px!important}

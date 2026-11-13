@@ -10,5 +10,5 @@ TOKENS = {}             # pour forcer une couleur : {"teal": "#0F766E"}
 # Cas clients : uniquement des dossiers réels, chiffres validés par Nicolas, anonymisés.
 # Exemple : {"qui": "Restaurant, 12 salariés, Paris", "resultat": "- 18 % de cotisation", "detail": "Même niveau de garanties, mise en place en 3 semaines."}
 CASES = []
-LOGO = ''            # mascotte du logo (voir boost_mascots.py) ; vide : on garde le logo du site
+LOGO = ''            # dessin du logo (voir boost_mascots.py) ; vide : on garde le logo du site
 GUIDE_PUB = 'des stations de Savoie et de Haute-Savoie'   # public cité dans les guides
