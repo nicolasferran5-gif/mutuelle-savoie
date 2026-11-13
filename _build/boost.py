@@ -69,6 +69,8 @@ def tokens(css):
          "white": "#FFFFFF", "ok": "#1F7A55"}
     if "mustard" in v: t["mustard"] = v["mustard"]
     t.update(getattr(CFG, "TOKENS", {}))
+    b = _hex(t[getattr(CFG, "LOGO_BG", "red")])          # couleur de marque : dégradé du héros, teintes, étiquettes
+    t["brand"] = _tohex(b); t["brand-d"] = _tohex(_mix(b, _hex(t["navy"]), .62)); t["brand-l"] = _tohex(_mix(b, (255, 255, 255), .16))
     return t
 
 
