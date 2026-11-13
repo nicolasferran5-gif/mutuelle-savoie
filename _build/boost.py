@@ -108,7 +108,7 @@ ICONS = {
 
 
 def logo_svg(navy, accent, cls=' class="logo-mark"', extra="", dark="#1D2250", sec="#11A39B"):
-    if CFG.LOGO in MS.G and not getattr(CFG, "LOGO_DRAWN", False):   # pictogramme plein dans une tuile de couleur
+    if CFG.LOGO in MS.G and getattr(CFG, "LOGO_FLAT", False):   # pictogramme plein dans une tuile de couleur
         g = MS.G[CFG.LOGO].format(D=dark, A=navy, Y=accent, S=sec, W="#FFFFFF", C="#F3ECDD")
         return f'<svg{cls} viewBox="0 0 64 64" aria-hidden="true"{extra}><rect width="64" height="64" rx="17" fill="{navy}"/>{g}</svg>'
     if CFG.LOGO in MS.M:   # logo dessiné : {D} foncé du site, {A} couleur de marque, {Y} accent
@@ -726,7 +726,10 @@ def process(path, slug, mode, versions, made=()):
             return (f'<a class="poster" href="{m.group(1)}">{ico}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
                     f'<span class="sc">{_html.escape(" ".join(parts), quote=False)}</span></div><span class="go">Voir la page</span></a>')
         h = re.sub(r'<a class="poster[^"]*" href="([^"]*)">(.*?)</a>', poster, h, flags=re.S)
-        if slug == "index" and "bx-scene" not in h:
+        if slug == "index":   # accueil allégé : on retire les blocs qui font doublon avec les simulateurs et le comparatif
+            for sid in ("outils", "pourquoi"):
+                h = re.sub(r'<section class="band[^"]*" id="%s">.*?</section>\s*' % sid, "", h, count=1, flags=re.S)
+        if slug == "index" and "bx-scene" not in h and getattr(CFG, "SCENE", False):
             arts_ = list(dict.fromkeys(scene_arts))
             if getattr(CFG, "LOGO", "") in MS.M:
                 arts_.insert(len(arts_) // 2, MS.M[CFG.LOGO].format(D=versions["navy"], A=versions["logo_bg"], Y=versions["accent"], S=versions["sec"], W="#FFFFFF", C="#F3ECDD"))

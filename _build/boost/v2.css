@@ -498,3 +498,40 @@ h1,h2,.sec-head h2,.cta-band h2,.prose h2,.bx-sit h3,.bx-q-text{font-weight:800!
 .foot-top h3{font:700 .95rem/1 var(--f-body)!important;letter-spacing:0!important;text-transform:none!important}
 .rule,.poster,.bx-cas,.bx-sit,.bx-quiz,.bx-arret,.bx-calc,.bx-check{border-radius:20px!important}
 @media (max-width:860px){.hero .wrap{padding-block:34px 130px!important}.bx-scene{height:110px}.band.bg-navy{padding-top:68px}}
+
+/* ============ Sobriété : une seule police, blanc et une teinte, une seule bande foncée ============ */
+:root{--f-slab:"Manrope","Segoe UI",system-ui,sans-serif;--f-cond:"Manrope","Segoe UI",system-ui,sans-serif;--f-script:"Manrope","Segoe UI",system-ui,sans-serif}
+h1,h2,.sec-head h2,.cta-band h2,.prose h2,.bx-sit h3,.bx-q-text,.hero .l1,.brand-name,.ticket-head strong,.rule .num,.proof-band strong,.kpi strong,.bx-ring text,.bx-inline p,.lead-done h3,.score strong{font-family:var(--f-body)!important;font-weight:800!important;letter-spacing:-.03em!important}
+.brand-name{font-size:1.3rem!important;letter-spacing:-.025em!important}
+.hero .wrap{padding-block:64px 80px!important;align-items:center}
+.hero .l1{font-size:clamp(2.2rem,4vw,3.2rem)!important;line-height:1.08!important}
+.hero .l2{font:700 clamp(1.15rem,1.8vw,1.4rem)/1.3 var(--f-body)!important;letter-spacing:-.01em}
+.hero .l3{display:none!important}
+.hero .hero-lead{font-size:1.08rem!important;max-width:34em}
+.sec-head h2{font-size:clamp(1.8rem,3vw,2.4rem)!important;line-height:1.12!important}
+.page-hero h1,.page-hero h1.kw-h1{font-size:clamp(2rem,3.6vw,2.8rem)!important;line-height:1.1!important}
+.page-hero h1.art-h1{font-size:clamp(1.8rem,3.2vw,2.5rem)!important;line-height:1.12!important}
+.cta-band h2{font-size:clamp(1.7rem,3vw,2.3rem)!important;line-height:1.12!important}
+.prose h2{font-size:clamp(1.4rem,2.4vw,1.8rem)!important;line-height:1.18!important}
+.bx-sit h3{font-size:clamp(1.3rem,2.2vw,1.6rem)!important}
+.bx-q-text{font-size:clamp(1.2rem,2vw,1.5rem)!important}
+.ticket-head strong{font-size:1.35rem!important}
+.rule .num{font-size:2.1rem!important}.proof-band strong{font-size:1.6rem!important}
+.band{padding-block:76px!important}
+.band.bg-navy{padding-top:76px!important}
+/* bandes : blanc ou teinte claire ; seule la bande « obligations » reste foncée */
+.band.bg-teal,.band.bg-navy:not(#obligations),.band.bg-red{background:var(--paper)!important;color:var(--ink)!important}
+.band.bg-teal h2,.band.bg-navy:not(#obligations) h2,.band.bg-teal h3,.band.bg-navy:not(#obligations) h3,.band.bg-teal .relief-cream,.band.bg-navy:not(#obligations) .relief-cream,.band.bg-navy:not(#obligations) .relief-mustard,.band.bg-teal .relief-mustard{color:var(--ink)!important}
+.band.bg-teal p,.band.bg-navy:not(#obligations) p,.band.bg-teal li,.band.bg-navy:not(#obligations) li{color:var(--muted)!important}
+.band.bg-teal .sec-head .t-label,.band.bg-navy:not(#obligations) .sec-head .t-label,.band.bg-teal > .wrap > div > .t-label,.band.bg-navy:not(#obligations) > .wrap > div > .t-label,.band.bg-teal .t-label,.band.bg-navy:not(#obligations) .t-label{color:var(--brand)!important}
+.band.bg-teal .t-script,.band.bg-navy:not(#obligations) .t-script,.band.bg-teal .sub,.band.bg-navy:not(#obligations) .sub{color:var(--brand)!important;font:700 1.1rem/1.3 var(--f-body)!important}
+.band.bg-teal .rule,.band.bg-navy:not(#obligations) .rule,.band.bg-teal .tool{border:1px solid var(--line)!important;background:#fff!important}
+.band.bg-teal .steps li::before,.band.bg-navy:not(#obligations) .steps li::before{background:var(--paper2)!important;color:var(--brand)!important}
+.band.bg-teal .steps h3,.band.bg-navy:not(#obligations) .steps h3{color:var(--ink)!important}
+.band.bg-teal a:not(.btn),.band.bg-navy:not(#obligations) a:not(.btn){color:var(--brand)!important}
+.bg-cream2,.bg-mustard{background:var(--paper)!important}
+.rule,.poster,.bx-cas,.bx-sit,.bx-quiz,.bx-arret,.bx-calc,.bx-check{border-radius:16px!important;box-shadow:none!important}
+.rule:hover,.poster:hover,.blog-card:hover{transform:none!important;box-shadow:none!important;border-color:var(--brand)!important}
+.bx-cta-ill{display:none}
+.proof-band div{background:transparent!important;border:1px solid var(--line)!important;border-radius:16px!important}
+@media (max-width:860px){.hero .wrap{padding-block:32px 48px!important}.band{padding-block:54px!important}}
