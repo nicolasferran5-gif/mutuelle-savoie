@@ -524,7 +524,7 @@ def process(path, slug, mode, versions, made=()):
         h = re.sub(r'<link rel="stylesheet" href="https://fonts\.googleapis\.com[^>]*>\n?', "", h)
         a = ("../" * depth + "assets/") if mode == "preview" else "/assets/"
         pl = "".join(f'<link rel="preload" href="{a}fonts/{f}" as="font" type="font/woff2" crossorigin>\n' for f in
-                     ("figtree-latin-wght-normal.woff2",))
+                     ("source-serif-4-latin-wght-normal.woff2", "figtree-latin-wght-normal.woff2"))
         h = h.replace('<link rel="stylesheet" href="', pl + '<link rel="stylesheet" href="', 1)
         h = re.sub(r'(<span class="l2[^"]*">)(.*?)(</span>)', lambda m: m.group(1) + re.sub(r"<br\s*/?>", " ", m.group(2)) + m.group(3), h, count=1, flags=re.S)
         def poster(m):
@@ -541,6 +541,9 @@ def process(path, slug, mode, versions, made=()):
 
     if getattr(CFG, "LOGO", ""):
         h = re.sub(r'<svg class="logo-mark"[^>]*>.*?</svg>', lambda m: logo_svg(versions["logo_bg"], versions["accent"], dark=versions["navy"], sec=versions["sec"]), h, flags=re.S)
+
+    if CFG.THEME == "v2":
+        h = re.sub(r'(<span class="brand-name">)(.*?)(</span>)', lambda m: m.group(1) + (CFG.BRAND if _txt(m.group(2)).isupper() else m.group(2)) + m.group(3), h, flags=re.S)
 
     # H1 porteur du mot-clé sur les pages intérieures ; l'ancien titre devient le slogan
     if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique", "guides"):

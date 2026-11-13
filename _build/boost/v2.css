@@ -1,5 +1,6 @@
 
 /* ============ Design v2 (boost) : sobre, lisible, orienté demande d'étude ============ */
+@font-face{font-family:"Source Serif 4";font-weight:300 800;font-style:normal;font-display:swap;src:url(fonts/source-serif-4-latin-wght-normal.woff2) format("woff2")}
 @font-face{font-family:"Figtree";font-weight:300 900;font-style:normal;font-display:swap;src:url(fonts/figtree-latin-wght-normal.woff2) format("woff2")}
 :root{
   /*TOKENS*/
@@ -300,3 +301,26 @@ td{border-bottom-color:var(--line)}
 @media (max-width:560px){.band{padding-block:56px}.brand-name{font-size:1.25rem}.lead-form{padding:6px 20px 22px}.ticket-head{padding:20px 20px 10px}.bx-quiz,.bx-sit{padding:22px}.rule{padding:22px}.proof-band div{padding:18px}.proof-band strong{font-size:1.45rem}}
 .logo-mark,.site-head .logo-mark{width:46px!important;height:46px!important}
 .site-foot .logo-mark{background:#fff!important;border-radius:14px!important;padding:5px!important;width:50px!important;height:50px!important}
+
+/* ============ Typographie classique : titres à empattements, graisses mesurées ============ */
+:root{--f-slab:"Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif}
+h1,h2,.t-slab,.kpi strong,.rule .num,.proof-band strong,.score strong,.lead-done h3,.ticket-head strong,.bx-case .res,.bx-q-text,.bx-ring text,.bx-sit h3,.photo-card h3,.hero .l1,.cta-band h2,.bx-inline p{font-family:var(--f-slab)!important;font-weight:560!important;letter-spacing:-.012em!important}
+h3,.blog-title,.faq summary,.rule h3,.cols3 h3,.steps h3,.poster .b,.poster .c,.bx-q-res h3,.bx-guide h3{font-family:var(--f-body)!important;font-weight:620!important;letter-spacing:-.008em!important}
+.hero .l1{font-size:clamp(2.5rem,4.9vw,3.9rem);line-height:1.06}
+.hero .l2{font:500 clamp(1.25rem,2.1vw,1.6rem)/1.25 var(--f-slab);font-style:normal;letter-spacing:0}
+.hero .l3{font-weight:400}
+.sec-head h2{font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.1}
+.page-hero h1,.page-hero h1.kw-h1{letter-spacing:-.015em!important;line-height:1.08}
+.page-hero .sub,.page-hero .sub.slogan{font:500 clamp(1.15rem,2vw,1.45rem)/1.3 var(--f-slab);font-style:normal;letter-spacing:0}
+.brand-name{font-family:var(--f-slab)!important;font-weight:620!important;font-size:1.5rem;letter-spacing:-.01em!important;text-transform:none!important}
+.brand-name::first-letter{text-transform:uppercase}
+.nav a{font-weight:450}
+.btn{font-weight:580;letter-spacing:0}
+.t-label,.sec-head .t-label{font-weight:580}
+.rule .num{font-size:2.6rem}
+.proof-band strong{font-size:1.75rem}
+.bx-sit-tabs button,.bx-q-ans button,.chip span{font-weight:500}
+.hero .hero-proofs li{font-weight:500!important}
+.lead-form legend,.lbl{font-weight:580}
+.bx-sticky a{font-weight:620}
+@media (max-width:560px){.brand-name{font-size:1.3rem}}
