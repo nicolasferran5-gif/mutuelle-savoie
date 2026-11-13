@@ -15,6 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BX = os.path.join(HERE, "boost")
 import boost_cfg as CFG
 import boost_guides as GD
+import boost_mascots as MS
 
 WWC = "https://www.wealthwiseconseil.fr"
 AUTHOR = {"@type": "Person", "name": "Nicolas Ferran", "jobTitle": "Courtier en assurance, fondateur de WealthWise Conseil",
@@ -94,7 +95,10 @@ ICONS = {
 }
 
 
-def logo_svg(navy, accent, cls=' class="logo-mark"', extra=""):
+def logo_svg(navy, accent, cls=' class="logo-mark"', extra="", dark="#1D2250"):
+    if CFG.LOGO in MS.M:   # mascotte dessinée : {D} foncé du site, {A} couleur de marque, {Y} accent
+        g = MS.M[CFG.LOGO].format(D=dark, A=navy, Y=accent, W="#FFFFFF", C="#F6EFE2")
+        return f'<svg{cls} viewBox="0 0 64 64" aria-hidden="true"{extra}>{g}</svg>'
     ic = ICONS[CFG.LOGO]
     st = (f'<style>.bxl *{{fill:none;stroke:#fff;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}}'
           f'.bxl .a{{fill:{accent};stroke:none}}.bxl .s{{stroke:{accent}}}.bxl .f{{fill:{accent};stroke:{accent}}}</style>')
@@ -536,7 +540,7 @@ def process(path, slug, mode, versions, made=()):
         h = re.sub(r'<meta name="theme-color" content="[^"]*">', f'<meta name="theme-color" content="{versions["navy"]}">', h)
 
     if getattr(CFG, "LOGO", ""):
-        h = re.sub(r'<svg class="logo-mark"[^>]*>.*?</svg>', lambda m: logo_svg(versions["logo_bg"], versions["accent"]), h, flags=re.S)
+        h = re.sub(r'<svg class="logo-mark"[^>]*>.*?</svg>', lambda m: logo_svg(versions["logo_bg"], versions["accent"], dark=versions["navy"]), h, flags=re.S)
 
     # H1 porteur du mot-clé sur les pages intérieures ; l'ancien titre devient le slogan
     if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique", "guides"):
@@ -667,7 +671,7 @@ def run(out, mode):
     logo_bg = tk.get(getattr(CFG, "LOGO_BG", "red"), navy) if CFG.THEME == "v2" else navy
     versions = {"css": _hash(css), "js": _hash(js), "navy": navy, "accent": accent, "logo_bg": logo_bg}
     if getattr(CFG, "LOGO", ""):
-        open(os.path.join(out, "assets", "favicon.svg"), "w").write(logo_svg(logo_bg, accent, "", ' xmlns="http://www.w3.org/2000/svg"'))
+        open(os.path.join(out, "assets", "favicon.svg"), "w").write(logo_svg(logo_bg, accent, "", ' xmlns="http://www.w3.org/2000/svg"', dark=navy))
         for f in glob.glob(os.path.join(BX, "icons", "*")):
             shutil.copy(f, os.path.join(out, "favicon.ico") if f.endswith(".ico") else os.path.join(out, "assets", os.path.basename(f)))
 
