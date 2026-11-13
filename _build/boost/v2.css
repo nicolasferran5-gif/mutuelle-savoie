@@ -353,3 +353,24 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0
 .bx-cmp thead .us,.bx-cmp td.us::before{color:var(--brand)}
 .bg-navy > .wrap > .t-label,.bg-teal > .wrap > .t-label,.bg-navy .sec-head .t-label,.bg-teal .sec-head .t-label,.bg-red .sec-head .t-label{color:#fff}
 @media (max-width:860px){.hero{background:linear-gradient(160deg,var(--brand) 0%,var(--brand-d) 100%)}}
+
+/* ============ Palettes travaillées : dégradé à deux teintes, papier teinté ============ */
+:root{--tint:var(--paper);--tint2:var(--paper2)}
+body{background:#fff}
+.hero{background:radial-gradient(62% 85% at 100% 0%,color-mix(in srgb,var(--brand2) 78%,transparent),transparent 62%),radial-gradient(55% 70% at 0% 100%,color-mix(in srgb,var(--brand-d) 92%,transparent),transparent 72%),linear-gradient(135deg,var(--brand-l) 0%,var(--brand) 46%,var(--brand-d) 100%)}
+.hero .l2{color:var(--hl)!important}
+.cta-band{background:radial-gradient(60% 120% at 100% 0%,color-mix(in srgb,var(--brand2) 60%,transparent),transparent 60%),linear-gradient(135deg,var(--brand) 0%,var(--brand-d) 100%)!important}
+.page-hero.bg-teal,.page-hero.bg-red{background:radial-gradient(60% 110% at 100% 0%,color-mix(in srgb,var(--brand2) 55%,transparent),transparent 60%),linear-gradient(135deg,var(--brand) 0%,var(--brand-d) 100%)!important}
+.page-hero.bg-navy,.bg-navy{background:radial-gradient(70% 90% at 100% 0%,color-mix(in srgb,var(--brand) 42%,transparent),transparent 62%),var(--navy)!important}
+.bg-teal{background:linear-gradient(135deg,var(--teal),color-mix(in srgb,var(--teal) 70%,var(--navy)))}
+.bg-cream2,.bg-mustard,.page-hero.bg-mustard,.page-hero.bg-cream,.page-hero.bg-cream2{background:var(--paper)}
+.rule .tag,.t-label,.sec-head .t-label,.bx-sit-tag{background:var(--paper2)}
+.bg-cream2 .t-label,.bg-mustard .t-label,.bg-cream2 .rule .tag{background:#fff}
+.proof-band div,.insurers div,.faq details,.callout,.bx-brief,.bx-sit-res,th,.bx-cmp .us{background:var(--paper)}
+.bg-cream2 .proof-band div,.bg-cream2 .insurers div,.bg-cream2 .faq details{background:#fff}
+.icon-badge,.poster .ill{background:var(--paper2)!important}
+.steps li::before{background:var(--paper2)}
+.bx-toc{background:#fff}
+.site-foot{background:var(--navy)}
+.bx-sticky .go{background:var(--red)}
+@media (max-width:860px){.hero{background:radial-gradient(90% 50% at 100% 0%,color-mix(in srgb,var(--brand2) 70%,transparent),transparent 65%),linear-gradient(165deg,var(--brand) 0%,var(--brand-d) 100%)}}

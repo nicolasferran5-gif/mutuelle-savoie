@@ -71,6 +71,15 @@ def tokens(css):
     t.update(getattr(CFG, "TOKENS", {}))
     b = _hex(t[getattr(CFG, "LOGO_BG", "red")])          # couleur de marque : dégradé du héros, teintes, étiquettes
     t["brand"] = _tohex(b); t["brand-d"] = _tohex(_mix(b, _hex(t["navy"]), .62)); t["brand-l"] = _tohex(_mix(b, (255, 255, 255), .16))
+    t["brand2"] = t.get("mustard", "#F4C24B"); t["paper"] = _tohex(_mix(b, (255, 255, 255), .94)); t["paper2"] = _tohex(_mix(b, (255, 255, 255), .87))
+    pal = getattr(CFG, "PALETTE", {})                      # palette travaillée à la main, propre au site
+    t.update(pal)
+    if "navy" in pal:
+        n = _hex(pal["navy"]); t["ink"] = _tohex(_mix(n, (0, 0, 0), .25)); t["muted"] = _tohex(_mix(n, (255, 255, 255), .32))
+        t["line"] = _tohex(_mix(_mix(_hex(t["paper2"]), n, .14), (255, 255, 255), .2))
+    if "red" in pal:
+        t["red-d"] = _tohex(_mix(_hex(pal["red"]), (0, 0, 0), .15))
+    t["hl"] = _tohex(_mix(_hex(t.get("mustard", "#F4C24B")), (255, 255, 255), .3))
     return t
 
 
