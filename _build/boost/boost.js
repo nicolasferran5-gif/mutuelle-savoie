@@ -107,3 +107,15 @@
     m.value = 'Situation type choisie : ' + go.dataset.sit;
   });
 })();
+
+/* ---- boost : recherche dans le lexique ---- */
+(function () {
+  var inp = document.querySelector('[data-lex]'); if (!inp) return;
+  var terms = [].slice.call(document.querySelectorAll('.bx-term')), empty = document.querySelector('.bx-lex-empty');
+  function norm(t) { return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+  inp.addEventListener('input', function () {
+    var q = norm(inp.value.trim()), n = 0;
+    terms.forEach(function (t) { var ok = !q || norm(t.textContent).indexOf(q) >= 0; t.hidden = !ok; if (ok) n++; });
+    if (empty) empty.hidden = n > 0;
+  });
+})();

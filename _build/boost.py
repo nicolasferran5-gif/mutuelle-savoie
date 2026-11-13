@@ -252,6 +252,88 @@ def situations_block():
 """
 
 
+COMPARE = [
+    ("Nombre d'offres étudiées", "Une seule : la sienne", "Celles de ses partenaires", "Plus de 15 assureurs, sans exclusivité"),
+    ("Connaissance de votre convention collective", "Variable selon le conseiller", "Pas de vérification", "Garanties vérifiées ligne par ligne"),
+    ("Documents de l'employeur (acte de mise en place, dispenses, notices)", "Modèles fournis, à vous de les adapter", "Non fournis", "Préparés et mis à jour pour vous"),
+    ("Négociation du tarif selon votre équipe", "Grille standard", "Tarif affiché, non négociable", "Tarif négocié sur l'âge moyen et les besoins réels"),
+    ("Interlocuteur après la signature", "Plateforme téléphonique", "Aucun", "Un conseiller attitré, pour vous et vos salariés"),
+    ("Remise en concurrence régulière", "Non, par définition", "À refaire vous-même", "Oui, à chaque échéance utile"),
+    ("Coût de l'étude", "Gratuit", "Gratuit", "Gratuit, sans engagement"),
+]
+
+
+def compare_block():
+    rows = "".join(f'<tr><th scope="row">{a}</th><td>{b}</td><td>{c}</td><td class="us">{d}</td></tr>' for a, b, c, d in COMPARE)
+    return f"""<section class="band bg-cream" id="comparatif">
+  <div class="wrap">
+    <div class="sec-head"><span class="t-label">Comparatif</span><h2>Assureur en direct, comparateur en ligne ou courtier spécialisé ?</h2><p>Trois façons de choisir sa mutuelle et sa prévoyance d'entreprise. Voici ce que chacune comprend vraiment.</p></div>
+    <div class="table-wrap bx-cmp"><table><thead><tr><th scope="col"></th><th scope="col">Assureur en direct</th><th scope="col">Comparateur en ligne</th><th scope="col" class="us">{CFG.BRAND}, courtier spécialisé</th></tr></thead><tbody>{rows}</tbody></table></div>
+  </div>
+</section>
+"""
+
+
+LEXIQUE = [
+    ("Mutuelle d'entreprise", "Aussi appelée complémentaire santé collective. Depuis le 1er janvier 2016, tout employeur du secteur privé doit en proposer une à ses salariés, dès le premier, et financer au moins 50 % de la cotisation de la couverture obligatoire."),
+    ("Prévoyance collective", "Contrat qui protège le salarié et sa famille en cas d'arrêt de travail, d'invalidité ou de décès. Elle complète les versements de la Sécurité sociale et le maintien de salaire dû par l'employeur."),
+    ("Panier de soins minimum", "Socle de garanties que toute mutuelle d'entreprise doit au moins contenir : ticket modérateur, forfait journalier hospitalier, minimums en dentaire et en optique. Votre convention collective peut imposer davantage."),
+    ("Contrat responsable", "Contrat santé qui respecte des planchers et des plafonds de remboursement fixés par la loi. C'est la condition pour que la part payée par l'employeur soit exonérée de cotisations sociales, dans certaines limites."),
+    ("100 % Santé", "Dispositif qui permet d'obtenir des lunettes, des prothèses dentaires et des aides auditives sans reste à charge, dans une sélection d'équipements, avec tout contrat responsable."),
+    ("Ticket modérateur", "Part d'une dépense de santé qui reste à payer après le remboursement de la Sécurité sociale. C'est la première chose que rembourse une mutuelle."),
+    ("Base de remboursement", "Tarif de référence de la Sécurité sociale pour chaque acte. Une garantie exprimée à « 200 % » rembourse jusqu'à deux fois ce tarif, part de la Sécurité sociale comprise."),
+    ("Dépassement d'honoraires", "Part du prix d'une consultation ou d'un acte qui dépasse la base de remboursement. Elle n'est jamais remboursée par la Sécurité sociale ; la mutuelle peut la couvrir selon le niveau de garantie."),
+    ("Reste à charge", "Ce que le salarié paie de sa poche une fois la Sécurité sociale et la mutuelle intervenues."),
+    ("Tiers payant", "Système qui évite au salarié d'avancer les frais : le professionnel de santé est payé directement par la Sécurité sociale et la mutuelle."),
+    ("Décision unilatérale de l'employeur", "Écrit par lequel l'employeur met en place la mutuelle ou la prévoyance : salariés concernés, garanties, répartition de la cotisation, dispenses. Il doit être remis à chaque salarié, avec une preuve de remise."),
+    ("Dispense d'affiliation", "Possibilité, pour certains salariés, de refuser la mutuelle de l'entreprise : contrat court, salarié déjà couvert par ailleurs, temps très partiel. La demande doit être écrite, signée et conservée par l'employeur."),
+    ("Versement santé", "Aide versée par l'employeur à certains salariés en contrat court ou à temps très partiel qui ne sont pas couverts par la mutuelle de l'entreprise, pour financer leur contrat individuel."),
+    ("Portabilité", "Maintien gratuit de la mutuelle et de la prévoyance pour l'ancien salarié indemnisé par l'assurance chômage, pendant une durée égale à son dernier contrat, dans la limite de 12 mois."),
+    ("Plafond de la Sécurité sociale", "Montant de référence revu chaque année : 4 005 € par mois et 48 060 € par an en 2026. Il sert à calculer de nombreuses cotisations et garanties."),
+    ("Tranche A", "Partie du salaire comprise entre 0 et le plafond mensuel de la Sécurité sociale, soit jusqu'à 4 005 € par mois en 2026. Aussi appelée tranche 1."),
+    ("Prévoyance des cadres (1,50 %)", "Obligation nationale : l'employeur doit financer seul, pour chaque cadre, une prévoyance d'au moins 1,50 % de la tranche A du salaire, affectée en priorité au risque décès. À défaut, il peut devoir verser lui-même trois plafonds annuels (144 180 € en 2026) en cas de décès."),
+    ("Maintien de salaire", "Obligation de l'employeur de compléter les indemnités de la Sécurité sociale pendant un arrêt de travail, sous conditions d'ancienneté et pour une durée limitée, selon la loi et la convention collective."),
+    ("Incapacité de travail", "Arrêt de travail temporaire. La prévoyance verse des indemnités journalières qui complètent celles de la Sécurité sociale, souvent après la période de maintien de salaire."),
+    ("Invalidité", "Réduction durable de la capacité de travail, reconnue par la Sécurité sociale. La prévoyance verse alors une rente qui complète la pension d'invalidité."),
+    ("Capital décès", "Somme versée aux bénéficiaires désignés par le salarié s'il décède. Elle s'exprime en pourcentage du salaire annuel."),
+    ("Rente éducation", "Rente versée aux enfants d'un salarié décédé, jusqu'à la fin de leurs études, pour financer leur éducation."),
+    ("Franchise", "Nombre de jours d'arrêt à partir duquel la prévoyance commence à verser ses indemnités. Elle doit être calée sur la fin du maintien de salaire, pour éviter un trou de revenu."),
+    ("Forfait social", "Contribution de 8 % due par les entreprises de 11 salariés et plus sur la part employeur des cotisations de mutuelle et de prévoyance."),
+    ("Assureur recommandé par la branche", "Organisme que les partenaires sociaux d'une branche conseillent pour appliquer la convention. L'employeur reste libre d'en choisir un autre, à condition d'offrir des garanties au moins équivalentes."),
+    ("Structure de cotisation", "Façon de répartir le prix de la mutuelle : tarif unique, « isolé / famille » ou « adulte / enfant ». Elle change fortement ce que paient l'employeur et chaque salarié."),
+    ("Comptes de résultats", "Document annuel qui compare les cotisations versées et les remboursements payés par l'assureur. Il sert de base pour négocier le tarif à l'échéance."),
+    ("Catégories objectives", "Critères autorisés pour proposer des garanties différentes selon les salariés, par exemple cadres et non-cadres, sans perdre les exonérations sociales."),
+    ("Courtier en assurance", "Professionnel indépendant, immatriculé à l'ORIAS, qui représente son client et non un assureur. Il compare plusieurs contrats, conseille et accompagne l'entreprise pendant la vie du contrat."),
+    ("Travailleur non salarié (TNS)", "Dirigeant affilié à la Sécurité sociale des indépendants, par exemple un gérant majoritaire de SARL. Il n'est pas couvert par le contrat des salariés et doit souscrire sa propre mutuelle et sa propre prévoyance, déductibles sous conditions (contrats « Madelin »)."),
+]
+
+
+def lexique_main(href):
+    import unicodedata
+    items = sorted(LEXIQUE, key=lambda x: unicodedata.normalize("NFKD", x[0]).lower())
+    dl = "".join(f'<div class="bx-term" id="{_slug(t)}"><dt>{t}</dt><dd>{d}</dd></div>' for t, d in items)
+    return f"""<main id="contenu">
+<section class="page-hero bg-cream">
+  <div class="wrap" style="grid-template-columns:minmax(0,1fr)">
+    <div>
+      <span class="crumb"><a href="{href('index')}">Accueil</a> · Lexique</span>
+      <h1 class="kw-h1">Lexique de la mutuelle et de la prévoyance d'entreprise</h1>
+      <p class="lead">Les {len(items)} mots qu'un employeur rencontre dans son contrat, expliqués en langage clair, avec les chiffres de 2026.</p>
+    </div>
+  </div>
+</section>
+<section class="band bg-cream" style="padding-top:36px">
+  <div class="wrap narrow">
+    <label class="bx-lex-search"><span>Chercher un mot</span><input type="text" data-lex placeholder="Portabilité, dispense, tranche A…" autocomplete="off"></label>
+    <dl class="bx-lex">{dl}</dl>
+    <p class="bx-lex-empty" hidden>Aucun mot ne correspond. Posez-nous la question : nous répondons sous 24 h ouvrées.</p>
+    <p style="margin-top:28px"><a class="btn btn-red" href="{href('devis')}">Poser ma question à un conseiller</a></p>
+  </div>
+</section>
+</main>
+"""
+
+
 def _slug(t):
     import unicodedata
     t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
@@ -317,7 +399,7 @@ def process(path, slug, mode, versions):
         h = re.sub(r'<link rel="stylesheet" href="https://fonts\.googleapis\.com[^>]*>\n?', "", h)
         a = ("../" * depth + "assets/") if mode == "preview" else "/assets/"
         pl = "".join(f'<link rel="preload" href="{a}fonts/{f}" as="font" type="font/woff2" crossorigin>\n' for f in
-                     ("bricolage-grotesque-latin-wght-normal.woff2", "instrument-sans-latin-wght-normal.woff2"))
+                     ("instrument-serif-latin-400-normal.woff2", "instrument-sans-latin-wght-normal.woff2"))
         h = h.replace('<link rel="stylesheet" href="', pl + '<link rel="stylesheet" href="', 1)
         h = re.sub(r'(<span class="l2[^"]*">)(.*?)(</span>)', lambda m: m.group(1) + re.sub(r"<br\s*/?>", " ", m.group(2)) + m.group(3), h, count=1, flags=re.S)
         def poster(m):
@@ -330,10 +412,16 @@ def process(path, slug, mode, versions):
             return (f'<a class="poster" href="{m.group(1)}">{ill.group(0) if ill else ""}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
                     f'<span class="sc">{_html.escape(" ".join(parts), quote=False)}</span></div><span class="go">Voir la page</span></a>')
         h = re.sub(r'<a class="poster[^"]*" href="([^"]*)">(.*?)</a>', poster, h, flags=re.S)
+        if slug == "index":
+            ph = getattr(CFG, "HERO_PHOTO", "") or (re.search(r"images\.unsplash\.com/(photo-[\w-]+)", h) or [None, ""])[1]
+            if ph:
+                u = f"https://images.unsplash.com/{ph}?auto=format&fit=crop&q=70&w=2000&h=1200"
+                h = h.replace('<section class="hero', f'<section style="--hero-img:url({u})" class="bx-photo hero', 1)
+                h = h.replace('<link rel="stylesheet" href="', f'<link rel="preload" as="image" href="{u}" fetchpriority="high">\n<link rel="stylesheet" href="', 1)
         h = re.sub(r'<meta name="theme-color" content="[^"]*">', f'<meta name="theme-color" content="{versions["navy"]}">', h)
 
     # H1 porteur du mot-clé sur les pages intérieures ; l'ancien titre devient le slogan
-    if not is_art and slug not in ("index", "mentions-legales", "a-propos"):
+    if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique"):
         m = re.search(r'<h1([^>]*)>(.*?)</h1>\s*<p class="sub"([^>]*)>(.*?)</p>', h, re.S)
         if m and "art-h1" not in m.group(1):
             kw = _html.escape(re.sub(r"\s*·\s*[^·]+$", "", title), quote=False)
@@ -358,7 +446,7 @@ def process(path, slug, mode, versions):
         if len(ends) >= 2 and 'id="diagnostic"' not in h:
             k = mi + ends[1]
             h = h[:k] + "\n" + quiz_block() + h[k:]
-        cb = cases_block() + situations_block()
+        cb = cases_block() + situations_block() + compare_block()
         if cb:
             i = h.rfind('<section class="cta-band')
             if i > 0: h = h[:i] + cb + h[i:]
@@ -427,7 +515,7 @@ def process(path, slug, mode, versions):
     # pied de page : lien « Qui sommes-nous » ; barre d'appel sur mobile
     ml = re.search(r'<li><a href="([^"]*mentions-legales[^"]*)">', h)
     if ml and "Qui sommes-nous</a></li>" not in h:
-        h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li>' + ml.group(0), 1)
+        h = h.replace(ml.group(0), f'<li><a href="{href("a-propos")}">Qui sommes-nous</a></li><li><a href="{href("lexique")}">Lexique</a></li>' + ml.group(0), 1)
     if is_art:
         h = h.replace("<header", '<div class="bx-progress" aria-hidden="true"><i></i></div>\n<header', 1)
     if slug != "mentions-legales":
@@ -476,6 +564,16 @@ def run(out, mode):
     href0 = (lambda s: f"{s}.html") if mode == "preview" else (lambda s: "/" if s == "index" else f"/{s}")
     open(os.path.join(out, "a-propos.html"), "w", encoding="utf-8").write(hd + about_main(href0) + ft)
 
+    lx_t = f"Lexique mutuelle et prévoyance d'entreprise : {len(LEXIQUE)} définitions · {CFG.BRAND}"
+    lx_d = "Portabilité, dispense, tranche A, contrat responsable, versement santé : les mots de la mutuelle et de la prévoyance d'entreprise expliqués simplement, chiffres 2026."
+    hl = idx[:idx.index("<main")].replace(t0, _html.escape(lx_t, quote=True)).replace(d0, _html.escape(lx_d, quote=True))
+    hl = hl.replace(f'<link rel="canonical" href="{CFG.DOMAIN}/">', f'<link rel="canonical" href="{CFG.DOMAIN}/lexique">')
+    hl = hl.replace(f'<meta property="og:url" content="{CFG.DOMAIN}/">', f'<meta property="og:url" content="{CFG.DOMAIN}/lexique">').replace(' aria-current="page"', "")
+    lld = {"@context": "https://schema.org", "@type": "DefinedTermSet", "name": "Lexique de la mutuelle et de la prévoyance d'entreprise", "url": CFG.DOMAIN + "/lexique", "inLanguage": "fr-FR",
+           "hasDefinedTerm": [{"@type": "DefinedTerm", "name": t, "description": d, "url": CFG.DOMAIN + "/lexique#" + _slug(t)} for t, d in LEXIQUE]}
+    hl = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: '<script type="application/ld+json">' + json.dumps(lld, ensure_ascii=False) + "</script>", hl, count=1, flags=re.S)
+    open(os.path.join(out, "lexique.html"), "w", encoding="utf-8").write(hl + lexique_main(href0) + ft)
+
     # 3. toutes les pages
     pages = []
     for p in sorted(glob.glob(os.path.join(out, "**", "*.html"), recursive=True)):
@@ -491,6 +589,9 @@ def run(out, mode):
     sm_p = os.path.join(out, "sitemap.xml")
     if os.path.exists(sm_p):
         sm = open(sm_p).read()
+        if "/lexique<" not in sm:
+            sm = sm.replace("</urlset>", f"  <url><loc>{CFG.DOMAIN}/lexique</loc><lastmod>2026-11-13</lastmod></url>\n</urlset>")
+            open(sm_p, "w").write(sm)
         if "/a-propos<" not in sm:
             lm = (re.findall(r"<lastmod>([\d-]+)</lastmod>", sm) or ["2026-11-13"])[0]
             sm = sm.replace("</urlset>", f"  <url><loc>{CFG.DOMAIN}/a-propos</loc><lastmod>{max(lm, '2026-11-13')}</lastmod></url>\n</urlset>")
