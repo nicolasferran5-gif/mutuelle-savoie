@@ -499,3 +499,8 @@ def build():
 
 
 build()
+
+
+# Couche commune conversion + référencement (voir _build/boost.py et _build/boost_cfg.py)
+import boost
+boost.run(OUT, MODE)
