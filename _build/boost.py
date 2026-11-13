@@ -78,6 +78,29 @@ def _txt(s):
     return re.sub(r"\s+", " ", _html.unescape(re.sub(r"<[^>]+>", " ", s))).strip()
 
 
+# ------------------------------------------------------------------ logos : pictogramme simple dans une tuile arrondie
+ICONS = {
+    "cloche": '<path d="M16 41a16 16 0 0 1 32 0"/><path d="M12 46h40"/><circle class="a" cx="32" cy="21" r="3.2"/>',
+    "ciseaux": '<circle cx="22" cy="45" r="6"/><circle cx="42" cy="45" r="6"/><path d="M26 40 44 16M38 40 20 16"/><circle class="a" cx="32" cy="32" r="2.6"/>',
+    "pain": '<path d="M14 44V38c0-10 8-17 18-17s18 7 18 17v6Z"/><path class="s" d="M25 29l3 7M32 27v8M39 29l-3 7"/>',
+    "code": '<path d="M25 23 14 32l11 9M39 23l11 9-11 9"/><path class="s" d="M35 19 29 45"/>',
+    "croix": '<path d="M27 15h10v12h12v10H37v12H27V37H15V27h12Z"/><circle class="a" cx="32" cy="32" r="3"/>',
+    "dent": '<path d="M23 16c-5.500 0-9 4-9 9.500 0 5 2.500 8 3.500 13 .9 4.500 1.500 10 4.500 10 3.200 0 3-7.500 5-11 1-1.800 2.500-2.500 4.500-2.500s3.500.7 4.500 2.500c2 3.500 1.800 11 5 11 3 0 3.600-5.500 4.500-10 1-5 3.500-8 3.500-13 0-5.500-3.500-9.500-9-9.500-3.500 0-5.500 1.800-8.500 1.800S26.500 16 23 16Z"/><path class="s" d="M39 23c2 .6 3.200 2.200 3.400 4.400"/>',
+    "golf": '<path d="M27 14v33"/><path class="f" d="M27 15l17 6.500L27 28Z"/><path d="M13 49c7-4.500 31-4.500 38 0"/>',
+    "maison": '<path d="M13 32 32 16l19 16"/><path d="M19 28v20h26V28"/><circle class="a" cx="32" cy="36" r="3"/><path class="s" d="M32 39v5"/>',
+    "beret": '<path d="M11 37c0-9 9-15 21-15s21 6 21 15c0 3.500-9.500 6-21 6s-21-2.500-21-6Z"/><path class="s" d="M32 22v-6"/>',
+    "burger": '<path d="M15 30c0-9 7.500-14 17-14s17 5 17 14Z"/><path class="s" d="M13 37.500h38"/><path d="M16 44h32v1a5 5 0 0 1-5 5H21a5 5 0 0 1-5-5Z"/>',
+}
+
+
+def logo_svg(navy, accent, cls=' class="logo-mark"', extra=""):
+    ic = ICONS[CFG.LOGO]
+    st = (f'<style>.bxl *{{fill:none;stroke:#fff;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}}'
+          f'.bxl .a{{fill:{accent};stroke:none}}.bxl .s{{stroke:{accent}}}.bxl .f{{fill:{accent};stroke:{accent}}}</style>')
+    return (f'<svg{cls} viewBox="0 0 64 64" aria-hidden="true"{extra}>{st}<rect width="64" height="64" rx="18" fill="{navy}"/>'
+            f'<g class="bxl">{ic}</g></svg>')
+
+
 # ------------------------------------------------------------------ formulaire en 2 étapes
 def step_form(m):
     t = m.group(0)
@@ -399,7 +422,7 @@ def process(path, slug, mode, versions):
         h = re.sub(r'<link rel="stylesheet" href="https://fonts\.googleapis\.com[^>]*>\n?', "", h)
         a = ("../" * depth + "assets/") if mode == "preview" else "/assets/"
         pl = "".join(f'<link rel="preload" href="{a}fonts/{f}" as="font" type="font/woff2" crossorigin>\n' for f in
-                     ("instrument-serif-latin-400-normal.woff2", "instrument-sans-latin-wght-normal.woff2"))
+                     ("figtree-latin-wght-normal.woff2",))
         h = h.replace('<link rel="stylesheet" href="', pl + '<link rel="stylesheet" href="', 1)
         h = re.sub(r'(<span class="l2[^"]*">)(.*?)(</span>)', lambda m: m.group(1) + re.sub(r"<br\s*/?>", " ", m.group(2)) + m.group(3), h, count=1, flags=re.S)
         def poster(m):
@@ -412,13 +435,10 @@ def process(path, slug, mode, versions):
             return (f'<a class="poster" href="{m.group(1)}">{ill.group(0) if ill else ""}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
                     f'<span class="sc">{_html.escape(" ".join(parts), quote=False)}</span></div><span class="go">Voir la page</span></a>')
         h = re.sub(r'<a class="poster[^"]*" href="([^"]*)">(.*?)</a>', poster, h, flags=re.S)
-        if slug == "index":
-            ph = getattr(CFG, "HERO_PHOTO", "") or (re.search(r"images\.unsplash\.com/(photo-[\w-]+)", h) or [None, ""])[1]
-            if ph:
-                u = f"https://images.unsplash.com/{ph}?auto=format&fit=crop&q=70&w=2000&h=1200"
-                h = h.replace('<section class="hero', f'<section style="--hero-img:url({u})" class="bx-photo hero', 1)
-                h = h.replace('<link rel="stylesheet" href="', f'<link rel="preload" as="image" href="{u}" fetchpriority="high">\n<link rel="stylesheet" href="', 1)
         h = re.sub(r'<meta name="theme-color" content="[^"]*">', f'<meta name="theme-color" content="{versions["navy"]}">', h)
+
+    if getattr(CFG, "LOGO", ""):
+        h = re.sub(r'<svg class="logo-mark"[^>]*>.*?</svg>', lambda m: logo_svg(versions["navy"], versions["accent"]), h, flags=re.S)
 
     # H1 porteur du mot-clé sur les pages intérieures ; l'ancien titre devient le slogan
     if not is_art and slug not in ("index", "mentions-legales", "a-propos", "lexique"):
@@ -543,7 +563,13 @@ def run(out, mode):
     js = open(js_p, encoding="utf-8").read() + open(os.path.join(BX, "boost.js"), encoding="utf-8").read()
     js = js.replace("preview: false,", "preview: !!window.__bxPreview,", 1) if "preview: false," in js else js
     open(js_p, "w", encoding="utf-8").write(js)
-    versions = {"css": _hash(css), "js": _hash(js), "navy": navy}
+    accent = (tk.get("mustard") if CFG.THEME == "v2" else None) or "#F4C24B"
+    if _lum(_hex(accent)) < .35: accent = "#F4C24B"
+    versions = {"css": _hash(css), "js": _hash(js), "navy": navy, "accent": accent}
+    if getattr(CFG, "LOGO", ""):
+        open(os.path.join(out, "assets", "favicon.svg"), "w").write(logo_svg(navy, accent, "", ' xmlns="http://www.w3.org/2000/svg"'))
+        for f in glob.glob(os.path.join(BX, "icons", "*")):
+            shutil.copy(f, os.path.join(out, "favicon.ico") if f.endswith(".ico") else os.path.join(out, "assets", os.path.basename(f)))
 
     # 2. page « Qui sommes-nous », bâtie sur l'en-tête et le pied de l'accueil
     idx = open(os.path.join(out, "index.html"), encoding="utf-8").read()
