@@ -79,6 +79,7 @@ def tokens(css):
         t["line"] = _tohex(_mix(_mix(_hex(t["paper2"]), n, .14), (255, 255, 255), .2))
     if "red" in pal:
         t["red-d"] = _tohex(_mix(_hex(pal["red"]), (0, 0, 0), .15))
+    t["hero"] = pal.get("hero", t["brand-d"])
     t["hl"] = _tohex(_mix(_hex(t.get("mustard", "#F4C24B")), (255, 255, 255), .3))
     return t
 
@@ -107,6 +108,9 @@ ICONS = {
 
 
 def logo_svg(navy, accent, cls=' class="logo-mark"', extra="", dark="#1D2250", sec="#11A39B"):
+    if CFG.LOGO in MS.G and not getattr(CFG, "LOGO_DRAWN", False):   # pictogramme plein dans une tuile de couleur
+        g = MS.G[CFG.LOGO].format(D=dark, A=navy, Y=accent, S=sec, W="#FFFFFF", C="#F3ECDD")
+        return f'<svg{cls} viewBox="0 0 64 64" aria-hidden="true"{extra}><rect width="64" height="64" rx="17" fill="{navy}"/>{g}</svg>'
     if CFG.LOGO in MS.M:   # logo dessiné : {D} foncé du site, {A} couleur de marque, {Y} accent
         g = MS.M[CFG.LOGO].format(D=dark, A=navy, Y=accent, S=sec, W="#FFFFFF", C="#F3ECDD")
         return f'<svg{cls} viewBox="0 0 64 64" aria-hidden="true"{extra}>{g}</svg>'
@@ -882,7 +886,7 @@ def run(out, mode):
     open(js_p, "w", encoding="utf-8").write(js)
     accent = (tk.get("mustard") if CFG.THEME == "v2" else None) or "#F4C24B"
     if _lum(_hex(accent)) < .35: accent = "#F4C24B"
-    logo_bg = tk.get(getattr(CFG, "LOGO_BG", "red"), navy) if CFG.THEME == "v2" else navy
+    logo_bg = tk.get("brand", navy) if CFG.THEME == "v2" else navy
     versions = {"css": _hash(css), "js": _hash(js), "navy": navy, "accent": accent, "logo_bg": logo_bg}
     versions["sec"] = (tk.get("red") if getattr(CFG, "LOGO_BG", "red") == "teal" else tk.get("teal")) if CFG.THEME == "v2" else "#11A39B"
     if getattr(CFG, "LOGO", ""):

@@ -88,3 +88,17 @@ def pick(label):
     for k, v in KEYS:
         if k in low: return v
     return None
+
+# Logos : pictogramme plein, deux tons, dans une tuile à la couleur du site (entre l'icône au trait et le dessin détaillé).
+G = {
+ "cloche": '<path d="M13 42a19 19 0 0 1 38 0Z" fill="{W}"/><rect x="9" y="44.500" width="46" height="5.500" rx="2.750" fill="{W}"/><circle cx="32" cy="19" r="4.200" fill="{Y}"/><path d="M20 38a12 12 0 0 1 7-9" fill="none" stroke="{A}" stroke-width="3" stroke-linecap="round" opacity=".55"/>',
+ "ciseaux": '<path d="M28 38 42 11c3 5 3 10 0 15l-9 13Z" fill="{W}"/><path d="M36 38 22 11c-3 5-3 10 0 15l9 13Z" fill="{W}" opacity=".8"/><circle cx="22" cy="46" r="6.500" fill="none" stroke="{W}" stroke-width="5"/><circle cx="42" cy="46" r="6.500" fill="none" stroke="{W}" stroke-width="5"/><circle cx="32" cy="34" r="2.800" fill="{Y}"/>',
+ "pain": '<path d="M9 44c0-13 10-22 23-22s23 9 23 22v3a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4Z" fill="{W}"/><path d="M22 30l4 10M32 28v11M42 30l-4 10" fill="none" stroke="{Y}" stroke-width="4" stroke-linecap="round"/>',
+ "ecran": '<rect x="10" y="13" width="44" height="30" rx="6" fill="{W}"/><path d="M26 22l-6 6 6 6M38 22l6 6-6 6" fill="none" stroke="{A}" stroke-width="3.600" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 20l-4 16" stroke="{Y}" stroke-width="3.600" stroke-linecap="round"/><rect x="6" y="46" width="52" height="6" rx="3" fill="{W}"/>',
+ "croix": '<path d="M25 9h14a2 2 0 0 1 2 2v12h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H41v12a2 2 0 0 1-2 2H25a2 2 0 0 1-2-2V41H11a2 2 0 0 1-2-2V25a2 2 0 0 1 2-2h12V11a2 2 0 0 1 2-2Z" fill="{W}"/><g transform="rotate(-40 32 32)"><rect x="20" y="26.500" width="24" height="11" rx="5.500" fill="{A}"/><path d="M32 26.500h6.500a5.500 5.500 0 0 1 0 11H32Z" fill="{Y}"/></g>',
+ "dent": '<path d="M23 12c-6 0-10 4.500-10 10.500 0 5.500 2.800 8.800 3.900 14.300 1 5 1.700 12.200 5 12.200 3.500 0 3.300-9.400 5.500-13.300 1.100-2 2.600-2.700 4.600-2.700s3.500.7 4.600 2.700c2.200 3.900 2 13.300 5.500 13.300 3.300 0 4-7.200 5-12.200 1.100-5.500 3.900-8.800 3.900-14.300C51 16.500 47 12 41 12c-3.900 0-6 2-9 2s-5.100-2-9-2Z" fill="{W}"/><path d="M47 6l1.600 4 4 1.600-4 1.600-1.600 4-1.600-4-4-1.600 4-1.600Z" fill="{Y}"/>',
+ "golf": '<path d="M6 50c8-8 17-11 26-11s18 3 26 11v2a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3Z" fill="{W}"/><path d="M27 10v34" stroke="{W}" stroke-width="3.600" stroke-linecap="round"/><path d="M27 10l18 7-18 7Z" fill="{Y}" stroke="{Y}" stroke-width="1.600" stroke-linejoin="round"/><circle cx="42" cy="44" r="3.600" fill="{A}"/>',
+ "maison": '<path d="M32 9 7 31h7v20a3 3 0 0 0 3 3h30a3 3 0 0 0 3-3V31h7Z" fill="{W}"/><path d="M27 54V42a5 5 0 0 1 10 0v12Z" fill="{A}"/><rect x="28" y="24" width="8" height="8" rx="2" fill="{Y}"/>',
+ "beret": '<path d="M33 17c1-4 1-6-1-9" fill="none" stroke="{W}" stroke-width="3.600" stroke-linecap="round"/><path d="M5 35c0-11 12-19 27-19s27 8 27 19c0 6-12 9-27 9S5 41 5 35Z" fill="{W}"/><path d="M14 43c5 2.500 11 3.500 18 3.500s13-1 18-3.500v4c0 3-8 5.500-18 5.500s-18-2.500-18-5.500Z" fill="{Y}"/>',
+ "burger": '<path d="M9 28c0-10 10-16 23-16s23 6 23 16Z" fill="{W}"/><rect x="7" y="31.500" width="50" height="7" rx="3.500" fill="{Y}"/><path d="M9 42h46v3a7 7 0 0 1-7 7H16a7 7 0 0 1-7-7Z" fill="{W}"/>',
+}

@@ -374,3 +374,15 @@ body{background:#fff}
 .site-foot{background:var(--navy)}
 .bx-sticky .go{background:var(--red)}
 @media (max-width:860px){.hero{background:radial-gradient(90% 50% at 100% 0%,color-mix(in srgb,var(--brand2) 70%,transparent),transparent 65%),linear-gradient(165deg,var(--brand) 0%,var(--brand-d) 100%)}}
+
+/* ============ Aplats francs, sans dégradé (esprit affiche, comme le site Savoie) ============ */
+.hero{background:radial-gradient(circle at 100% 108%,color-mix(in srgb,#fff 8%,var(--hero)) 0 34%,transparent 34.1%),radial-gradient(circle at 104% 0%,color-mix(in srgb,#000 14%,var(--hero)) 0 22%,transparent 22.1%),var(--hero)!important}
+.hero .l2{color:var(--mustard,#F4C24B)!important;font-weight:600}
+.hero .kicker{background:var(--red);border:0;color:#fff;border-radius:8px;font-weight:650}
+.cta-band,.bx-inline{background:var(--brand)!important}
+.page-hero.bg-teal,.page-hero.bg-red{background:var(--brand)!important}
+.page-hero.bg-navy,.bg-navy{background:var(--navy)!important}
+.bg-teal{background:var(--teal)!important}
+.site-foot .logo-mark{background:none!important;padding:0!important;border-radius:0!important;width:46px!important;height:46px!important}
+.bx-cta-ill{opacity:.2}
+@media (max-width:860px){.hero{background:var(--hero)!important}}
