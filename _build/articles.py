@@ -9,6 +9,168 @@ AUTHOR = ("Rédigé par l'équipe de <a href=\"" + WWC + "/\">WealthWise Conseil
 
 ARTICLES = [
 {
+ "slug": 'mutuelle-entreprise-assureur-comparateur-ou-courtier-station',
+ "title": "Assureur en direct, comparateur ou courtier : comment choisir la mutuelle d'un hôtel de station ?",
+ "short": 'Assureur, comparateur ou courtier ?',
+ "desc": "Trois façons de souscrire une mutuelle d'entreprise, ce que chacune comprend vraiment, et les questions à poser avant de signer.",
+ "date": "2026-11-13", "minutes": 5, "cat": 'Choisir', "color": 'bg-teal', "icon": 'i-chalet',
+ "body": """
+<p class="lead-p">Quand un hôtel de station cherche une mutuelle pour ses salariés, trois portes s'ouvrent : appeler un assureur, remplir un comparateur en ligne ou passer par un courtier. Le prix affiché se ressemble, le service beaucoup moins.</p>
+<h2>L'assureur en direct : une seule offre, la sienne</h2>
+<p>Un assureur, une mutuelle ou une institution de prévoyance vous propose ses propres contrats. C'est simple et rapide, mais vous n'avez aucun point de comparaison : impossible de savoir si le tarif est bon pour votre équipe, ni si un concurrent couvre mieux le même risque.</p>
+<h2>Le comparateur en ligne : rapide, mais sans vérification</h2>
+<p>Un comparateur affiche en quelques minutes les offres de ses partenaires. Il ne vérifie pas que le contrat respecte votre convention collective, ne rédige pas vos documents et ne vous suit pas après la signature. Vos coordonnées sont en général transmises à plusieurs assureurs, qui vous rappellent ensuite.</p>
+<h2>Le courtier : il travaille pour vous</h2>
+<p>Un courtier est un professionnel indépendant, immatriculé à l'ORIAS. Il représente son client, pas un assureur. Il met plusieurs organismes en concurrence sur le même cahier des charges, vérifie la conformité à la convention, et doit vous remettre par écrit les raisons de son conseil. Il reste ensuite votre interlocuteur pour les affiliations, les départs et les sinistres.</p>
+<p>Il est rémunéré par une commission incluse dans la cotisation, versée par l'assureur : l'étude ne vous est pas facturée.</p>
+<h2>Ce qui compte pour les entreprises de montagne de Savoie et de Haute-Savoie</h2>
+<p>En station, tout se joue sur quelques mois : des dizaines de saisonniers arrivent en décembre et repartent en avril, souvent logés par l'employeur, parfois d'une saison sur l'autre. Un contrat standard, pensé pour une entreprise de bureau, colle rarement à ce profil.</p>
+<h2>Les cinq questions à poser avant de signer</h2>
+<ul>
+<li>Le contrat respecte-t-il toutes les garanties minimales de ma convention collective ? Voir <a href="{{L:obligations-montagne}}">vos obligations</a>.</li>
+<li>Qui rédige l'écrit de mise en place et les modèles de dispense ?</li>
+<li>Qui mes salariés appellent-ils quand un remboursement bloque ?</li>
+<li>Comment le tarif évoluera-t-il, et sur quelles données ?</li>
+<li>Combien d'offres ont été comparées, et lesquelles ?</li>
+</ul>
+<p>Si l'interlocuteur ne sait pas répondre aux deux premières, le contrat risque d'être conforme sur le papier et fragile le jour d'un contrôle.</p>
+<h2>En pratique</h2>
+<p>Pour une petite équipe, la différence de prix entre les trois voies est souvent faible. La différence se fait sur la conformité et le suivi. C'est ce que nous faisons : comparer, vérifier, rédiger, puis rester joignables. <a href="{{L:devis}}">Demandez votre étude gratuite</a>.</p>
+""",
+},
+{
+ "slug": 'passer-a-11-salaries-mutuelle-prevoyance-station',
+ "title": "Passer à 11 salariés : ce qui change pour la mutuelle et la prévoyance d'un hôtel de station",
+ "short": 'Passer à 11 salariés',
+ "desc": 'Forfait social de 8 % sur la part employeur, règle des cinq ans, comité social et économique : ce que déclenche le seuil de 11 salariés.',
+ "date": "2026-11-13", "minutes": 5, "cat": 'Effectif', "color": 'bg-red', "icon": 'i-peak',
+ "body": """
+<p class="lead-p">L'embauche du onzième salarié est un cap. Pour la mutuelle et la prévoyance, elle déclenche une contribution que un hôtel de station ne payait pas jusque-là : le forfait social. Elle ne s'applique pas du jour au lendemain, et c'est une bonne nouvelle.</p>
+<h2>Qu'est-ce que le forfait social ?</h2>
+<p>C'est une contribution de <strong>8 %</strong> due par l'employeur sur la part qu'il finance pour la mutuelle et la prévoyance de ses salariés. Les entreprises de moins de 11 salariés en sont exonérées.</p>
+<h2>Un exemple chiffré</h2>
+<p>Prenons une cotisation de mutuelle de 50 € par mois et par salarié, prise en charge à 50 % par l'employeur. Le montant est une hypothèse, pour illustrer le calcul.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Effectif</th><th>Part employeur</th><th>Forfait social</th><th>Coût mensuel</th></tr></thead>
+<tbody>
+<tr><td>10 salariés</td><td>250 €</td><td>Non dû</td><td>250 €</td></tr>
+<tr><td>11 salariés</td><td>275 €</td><td>22 €</td><td>297 €</td></tr>
+<tr><td>15 salariés</td><td>375 €</td><td>30 €</td><td>405 €</td></tr>
+</tbody></table></div>
+<p>Le forfait social s'applique aussi à la part employeur de la prévoyance, y compris celle des cadres.</p>
+<h2>La règle des cinq ans</h2>
+<p>Le seuil ne joue pas dès la première embauche au-delà de dix. L'effectif retenu est une moyenne annuelle, calculée selon les règles de la Sécurité sociale, et le franchissement du seuil n'est pris en compte que lorsqu'il a été atteint ou dépassé pendant <strong>cinq années civiles consécutives</strong>. Une entreprise qui dépasse 11 salariés cette année a donc, en principe, plusieurs années devant elle. Faites confirmer votre situation par votre expert-comptable : le calcul de l'effectif réserve des surprises.</p>
+<h2>Ce que le seuil change aussi</h2>
+<ul>
+<li><strong>Le comité social et économique</strong> devient obligatoire quand l'effectif atteint 11 salariés pendant douze mois consécutifs. Il porte les réclamations des salariés, y compris sur la mutuelle ; à partir de 50 salariés, il doit être consulté avant toute modification des garanties.</li>
+<li><strong>Le poids face aux assureurs</strong> augmente : à partir d'une dizaine de salariés, le tarif se négocie plus facilement.</li>
+</ul>
+<h2>Pour les entreprises de montagne de Savoie et de Haute-Savoie</h2>
+<p>En station, tout se joue sur quelques mois : des dizaines de saisonniers arrivent en décembre et repartent en avril, souvent logés par l'employeur, parfois d'une saison sur l'autre. Le calcul de l'effectif moyen en tient compte : un salarié à temps partiel ou présent une partie de l'année ne compte pas pour un.</p>
+<h2>Comment s'y préparer</h2>
+<p>Trois réflexes : suivre son effectif moyen chaque année, intégrer les 8 % dans le budget avant qu'ils ne soient dus, et profiter du cap pour remettre le contrat en concurrence. Un exploitant qui tient un hôtel, un restaurant d'altitude et un magasin de location a souvent trois contrats. Notre <a href="/guides/cout-mutuelle-entreprise-employeur">guide du coût employeur</a> contient un calculateur pour faire le compte avec vos chiffres.</p>
+""",
+},
+{
+ "slug": 'tarif-unique-isole-famille-adulte-enfant-station',
+ "title": 'Tarif unique, isolé/famille ou adulte/enfant : quelle structure de cotisation pour un hôtel de station ?',
+ "short": 'Quelle structure de cotisation ?',
+ "desc": "La structure de cotisation décide de ce que paient l'employeur et chaque salarié. Les trois modèles, leurs effets, et celui qui convient à votre équipe.",
+ "date": "2026-11-13", "minutes": 5, "cat": 'Cotisation', "color": 'bg-navy', "icon": 'i-rope',
+ "body": """
+<p class="lead-p">Deux contrats aux garanties identiques peuvent coûter très différemment selon la façon dont la cotisation est découpée. C'est la structure de cotisation, et c'est souvent le premier réglage à revoir d'un hôtel de station.</p>
+<h2>Les trois structures courantes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Structure</th><th>Principe</th><th>Qui est avantagé</th></tr></thead>
+<tbody>
+<tr><td>Tarif unique</td><td>Un seul prix par salarié, qu'il couvre une personne ou toute sa famille</td><td>Les familles nombreuses</td></tr>
+<tr><td>Isolé / famille</td><td>Un prix pour le salarié seul, un autre pour le salarié et sa famille</td><td>Les salariés seuls, qui ne paient plus pour les autres</td></tr>
+<tr><td>Adulte / enfant</td><td>Un prix par adulte couvert, un prix par enfant, souvent gratuit à partir du troisième</td><td>Chacun paie au plus près de sa situation</td></tr>
+</tbody></table></div>
+<h2>Ce que finance l'employeur</h2>
+<p>La loi impose à l'employeur de payer au moins 50 % de la cotisation qui couvre <strong>le salarié</strong>, pour sa couverture obligatoire. Rien ne l'oblige à financer la part du conjoint et des enfants, sauf si la convention collective ou l'écrit de mise en place le prévoit. Avec un tarif unique « famille », l'employeur finance la moitié d'un prix calculé pour des foyers entiers, même si la plupart de ses salariés sont seuls.</p>
+<h2>Quelle structure pour les entreprises de montagne de Savoie et de Haute-Savoie ?</h2>
+<p>En station, tout se joue sur quelques mois : des dizaines de saisonniers arrivent en décembre et repartent en avril, souvent logés par l'employeur, parfois d'une saison sur l'autre.</p>
+<p>Deux repères pour décider. Si la plupart des salariés sont seuls, ou déjà couverts par ailleurs, une structure « isolé / famille » ou « adulte / enfant » est en général plus juste : la part employeur est calée sur le salarié, et la couverture du conjoint et des enfants devient une option, payée par ceux qui en ont besoin. Si presque tous ont une famille à couvrir, le tarif unique reste simple à gérer et lisible sur le bulletin de paie.</p>
+<h2>Le piège de la couverture familiale obligatoire</h2>
+<p>Si l'écrit de mise en place rend la couverture des ayants droit obligatoire, tous les salariés paient le tarif famille. Des dispenses existent, notamment pour le salarié dont le conjoint est déjà couvert par un autre contrat obligatoire, mais elles doivent être prévues et justifiées par écrit. Vérifiez ce point avant de changer de structure : voir <a href="{{L:obligations-montagne}}">vos obligations</a>.</p>
+<h2>Comment changer de structure</h2>
+<ol>
+<li>Demander à l'assureur, ou à un courtier, de chiffrer les trois structures sur votre effectif réel.</li>
+<li>Comparer le coût pour l'employeur et pour trois salariés types : seul, en couple, avec enfants.</li>
+<li>Mettre à jour l'écrit de mise en place et le remettre aux salariés.</li>
+<li>Informer chacun de ce qui change sur son bulletin de paie.</li>
+</ol>
+<p>Nous faisons ce chiffrage gratuitement : <a href="{{L:devis}}">envoyez-nous votre contrat actuel</a> et la composition de votre équipe.</p>
+""",
+},
+{
+ "slug": 'cotisation-mutuelle-augmente-que-faire-station',
+ "title": 'La cotisation de mutuelle augmente chaque année : que peut faire un hôtel de station ?',
+ "short": 'La mutuelle augmente : que faire ?',
+ "desc": "Pourquoi le tarif monte, quels documents demander à l'assureur, et les quatre leviers pour reprendre la main sans dégrader la couverture.",
+ "date": "2026-11-13", "minutes": 5, "cat": 'Tarif', "color": 'bg-mustard', "icon": 'i-lift',
+ "body": """
+<p class="lead-p">Chaque automne, le courrier arrive : la cotisation augmentera au 1er janvier. Beaucoup d'employeurs signent sans discuter. Un hôtel de station a pourtant plusieurs moyens d'agir, à condition de s'y prendre avant la fin de l'année.</p>
+<h2>Pourquoi le tarif augmente</h2>
+<ul>
+<li><strong>Les dépenses de santé progressent</strong> chaque année, et une part croissante est transférée de la Sécurité sociale vers les mutuelles.</li>
+<li><strong>Le plafond de la Sécurité sociale</strong>, sur lequel beaucoup de cotisations sont indexées, est revalorisé chaque 1er janvier. Il est de 4 005 € par mois en 2026.</li>
+<li><strong>Les remboursements de votre équipe</strong> : si le contrat a beaucoup remboursé, l'assureur ajuste le prix.</li>
+<li><strong>L'âge moyen</strong> de l'équipe, qui monte avec l'ancienneté.</li>
+</ul>
+<h2>Le document à demander : les comptes de résultats</h2>
+<p>Pour un contrat collectif, l'assureur doit remettre chaque année à l'employeur un rapport sur les comptes du contrat. Il compare les cotisations encaissées et les remboursements versés. C'est la pièce qui permet de savoir si la hausse est justifiée, et de négocier chiffres en main. Sur un très petit effectif, le contrat est souvent mutualisé avec d'autres entreprises et le détail est plus limité : demandez-le quand même.</p>
+<h2>Quatre leviers pour agir</h2>
+<ol>
+<li><strong>Négocier</strong> la hausse avec l'assureur, comptes à l'appui.</li>
+<li><strong>Revoir la structure de cotisation</strong> : tarif unique, « isolé / famille » ou « adulte / enfant ».</li>
+<li><strong>Ajuster les garanties</strong> : garder une base conforme à la convention et passer en option ce que peu de salariés utilisent.</li>
+<li><strong>Mettre en concurrence</strong> : un contrat de mutuelle de plus d'un an peut être résilié à tout moment, avec un mois de délai.</li>
+</ol>
+<h2>Pour les entreprises de montagne de Savoie et de Haute-Savoie</h2>
+<p>En station, tout se joue sur quelques mois : des dizaines de saisonniers arrivent en décembre et repartent en avril, souvent logés par l'employeur, parfois d'une saison sur l'autre. Ces caractéristiques pèsent sur le tarif : un assureur qui connaît le métier les tarifera mieux qu'un autre.</p>
+<h2>Le calendrier à respecter</h2>
+<p>Pour la mutuelle, vous pouvez agir toute l'année dès que le contrat a plus d'un an. Pour la prévoyance, la résiliation se fait à l'échéance, avec un préavis souvent de deux mois : pour un contrat qui se termine le 31 décembre, la décision se prend avant la fin octobre. Notre <a href="/guides/changer-de-mutuelle-entreprise">guide pour changer de mutuelle</a> détaille les étapes.</p>
+<h2>Ce qu'il ne faut pas faire</h2>
+<p>Baisser les garanties sous le minimum de la convention collective pour contenir le prix. Le contrat deviendrait non conforme, avec un risque de redressement bien supérieur à l'économie réalisée. Avant toute modification, vérifiez <a href="{{L:obligations-montagne}}">vos obligations</a>, ou <a href="{{L:devis}}">confiez-nous le comparatif</a>.</p>
+""",
+},
+{
+ "slug": 'conjoint-enfants-mutuelle-entreprise-station',
+ "title": "Conjoint et enfants : faut-il les couvrir dans la mutuelle d'un hôtel de station ?",
+ "short": 'Couvrir conjoint et enfants ?',
+ "desc": "Couverture familiale obligatoire ou facultative, qui paie, quelles dispenses pour les couples : ce que l'employeur doit décider et écrire.",
+ "date": "2026-11-13", "minutes": 5, "cat": 'Famille', "color": 'bg-teal', "icon": 'i-chalet',
+ "body": """
+<p class="lead-p">« Est-ce que ma femme et mes enfants sont couverts ? » C'est la première question d'un salarié à l'embauche. La réponse dépend d'un choix de l'employeur, que beaucoup ignorent avoir fait. Voici comment trancher d'un hôtel de station.</p>
+<h2>Ce que la loi impose</h2>
+<p>La loi oblige l'employeur à couvrir <strong>le salarié</strong>. Elle n'impose pas de couvrir son conjoint ni ses enfants. C'est la convention collective, ou à défaut l'écrit de mise en place, qui décide. Commencez par vérifier ce que prévoit votre branche : voir <a href="{{L:obligations-montagne}}">vos obligations</a>.</p>
+<h2>Deux façons de couvrir la famille</h2>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>Couverture familiale obligatoire</th><th>Couverture familiale facultative</th></tr></thead>
+<tbody>
+<tr><td>Qui est couvert</td><td>Le salarié, son conjoint et ses enfants, d'office</td><td>Le salarié ; il ajoute sa famille s'il le souhaite</td></tr>
+<tr><td>Qui paie la part de la famille</td><td>Employeur et salarié, selon la répartition prévue</td><td>Le salarié seul, en général</td></tr>
+<tr><td>Régime social de la part employeur</td><td>Exonérée dans les limites habituelles</td><td>Une participation de l'employeur à une couverture facultative est soumise à cotisations</td></tr>
+</tbody></table></div>
+<h2>Qui sont les ayants droit ?</h2>
+<p>Le contrat les définit. On y trouve en général le conjoint, le partenaire de pacte civil de solidarité ou le concubin, et les enfants à charge jusqu'à un âge fixé par le contrat, souvent prolongé pendant les études.</p>
+<h2>Le cas des couples</h2>
+<p>Quand la couverture familiale est obligatoire, un salarié dont le conjoint est déjà couvert par un autre contrat collectif obligatoire peut demander à en être dispensé, si l'écrit de mise en place le prévoit. Et quand deux conjoints travaillent dans la même entreprise, l'un peut être couvert comme ayant droit de l'autre, pour éviter de payer deux fois. Ces demandes sont écrites et justifiées chaque année.</p>
+<h2>Que choisir pour les entreprises de montagne de Savoie et de Haute-Savoie ?</h2>
+<p>En station, tout se joue sur quelques mois : des dizaines de saisonniers arrivent en décembre et repartent en avril, souvent logés par l'employeur, parfois d'une saison sur l'autre.</p>
+<p>La couverture familiale facultative convient quand les situations sont très variées : chacun paie pour la sienne, et le budget de l'employeur ne dépend pas de la composition des foyers. La couverture familiale obligatoire a du sens dans une équipe stable, où presque tous les salariés ont une famille, et quand l'employeur veut en faire un avantage pour fidéliser.</p>
+<h2>Ce qu'il faut écrire</h2>
+<ul>
+<li>dans l'écrit de mise en place : qui est couvert, à titre obligatoire ou facultatif, et qui paie quoi ;</li>
+<li>les cas de dispense ouverts aux salariés ;</li>
+<li>la définition des ayants droit, reprise de la notice de l'assureur.</li>
+</ul>
+<p>Un doute sur ce que prévoit votre contrat actuel ? <a href="{{L:devis}}">Envoyez-le-nous</a> : nous vous disons en clair qui est couvert, et à quel prix.</p>
+""",
+},
+{
  'slug': 'saisonnier-station-mutuelle-obligatoire',
  'title': 'Saisonnier en station : la mutuelle est-elle obligatoire ?',
  'short': 'Saisonniers : la mutuelle',
