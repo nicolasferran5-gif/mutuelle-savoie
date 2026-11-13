@@ -598,3 +598,18 @@ h2{font-family:var(--f-slab)!important;font-weight:900!important;letter-spacing:
 .bx-check-msg{font-weight:650;margin:18px 0}
 @media (max-width:860px){.bx-calc-in,.bx-g3{grid-template-columns:minmax(0,1fr)}.bx-calc-out div{flex-direction:column;gap:2px}}
 @media print{.site-head,.site-foot,.bx-sticky,.cta-band,.bx-q-cta,.page-hero .crumb{display:none!important}.bx-check{border:0;padding:0}}
+
+/* Dessins des cartes métiers, sous-titre du formulaire, cas concrets */
+.bx-draw{width:64px;height:64px;flex:none;order:1}
+.poster .p-head{order:2}.poster .go{order:3}
+.bx-step2-title.bx-sub{margin-top:6px;padding-top:14px;border-top:1px solid var(--line)}
+.bx-cass{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.bx-cas{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;display:grid;gap:14px;align-content:start;color:var(--ink)}
+.bx-cas .tag{justify-self:start;font-size:.85rem;font-weight:600;color:var(--brand,var(--red));background:var(--paper2,var(--cream-2));border-radius:999px;padding:6px 12px}
+.bx-cas h3{font:650 1.25rem/1.25 var(--f-body);margin:0}
+.bx-cas dl{margin:0;display:grid}
+.bx-cas dl div{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.bx-cas dt{color:var(--muted);font-size:.95rem}.bx-cas dd{margin:0;font-weight:550;font-variant-numeric:tabular-nums}
+.bx-cas .res{margin:0;background:var(--paper,var(--cream-2));border-radius:16px;padding:14px 16px;font-weight:600}
+#cas-concrets{scroll-margin-top:84px}
+@media (max-width:860px){.bx-cass{grid-template-columns:minmax(0,1fr)}.bx-cas dl div{grid-template-columns:minmax(0,1fr);gap:2px}.bx-cas{padding:22px}}

@@ -142,7 +142,7 @@ def step_form(m):
     more = ""
     if rest:
         rr = "".join(f'<div class="row2">{"".join(rest[i:i + 2])}</div>' if len(rest[i:i + 2]) == 2 else rest[i] for i in range(0, len(rest), 2))
-        more = f'<details class="bx-more"><summary>Ajouter des précisions (facultatif) : contrat en place, échéance…</summary><div class="bx-more-in">{rr}</div></details>'
+        more = f'<p class="bx-step2-title bx-sub">Votre entreprise</p>{rr}'
     new = f"""{form_open}
     {honey.group(0) if honey else ''}
     <div class="bx-steps" aria-hidden="true"><span>Étape 1 sur 2</span><div class="bx-bar"><i></i></div></div>
@@ -509,6 +509,37 @@ def checklist_main(href):
 """
 
 
+def concrete_block():
+    e = getattr(CFG, "ETAB", "une entreprise")
+    E = e[0].upper() + e[1:]
+    cs = [
+        ("Premier cadre", f"{E} de 8 salariés promeut un responsable au statut cadre",
+         [("Salaire du cadre", "3 200 € brut par mois"), ("Cotisation minimale obligatoire", "1,50 % × 3 200 € = 48 € par mois, payés par l'employeur"), ("Risque sans ce contrat", "144 180 € à verser à la famille en cas de décès")],
+         "Pour 48 € par mois, l'entreprise se met à l'abri d'un risque de 144 180 €."),
+        ("Passage à 11 salariés", f"{E} passe de 10 à 11 salariés",
+         [("Hypothèse", "cotisation de 50 € par mois et par salarié, prise en charge à 50 %"), ("À 10 salariés", "25 € × 10 = 250 € par mois"), ("À 11 salariés", "25 € × 11 = 275 €, plus 8 % de forfait social, soit 297 € par mois")],
+         "Le onzième salarié coûte 47 € de plus par mois, dont 22 € de forfait social sur toute l'équipe : un seuil à anticiper."),
+        ("Arrêt de deux mois", f"Un salarié de {e.split(' ', 1)[1] if ' ' in e else e}, 2 ans d'ancienneté, s'arrête 60 jours",
+         [("Salaire", "2 000 € brut par mois"), ("Jours 1 à 7", "3 jours sans rien, puis la moitié du salaire"), ("Jours 8 à 37", "90 % du salaire, complété par l'employeur"), ("Jours 38 à 60", "deux tiers du salaire")],
+         "Sans prévoyance, le salarié perd environ 1 040 € sur les deux mois, et l'employeur finance seul le complément."),
+        ("Contrat d'un mois", f"{E} embauche un renfort en contrat à durée déterminée d'un mois, 60 heures",
+         [("Le salarié", "garde sa mutuelle personnelle et demande une dispense"), ("Versement santé", "22,27 € × 60 ÷ 151,67 × 125 % = 11,01 €"), ("À conserver", "la demande de dispense et l'attestation de sa mutuelle")],
+         "11,01 € versés une fois, au lieu d'une affiliation puis d'une radiation pour quatre semaines."),
+    ]
+    arts = ""
+    for tag, title, rows, res in cs:
+        dl = "".join(f"<div><dt>{a}</dt><dd>{b}</dd></div>" for a, b in rows)
+        arts += f'<article class="bx-cas"><span class="tag">{tag}</span><h3>{title}</h3><dl>{dl}</dl><p class="res">{res}</p></article>'
+    return f"""<section class="band bg-cream2" id="cas-concrets">
+  <div class="wrap">
+    <div class="sec-head"><span class="t-label">Cas concrets</span><h2>Quatre cas concrets, chiffres à l'appui</h2><p>Des exemples de calcul avec les barèmes légaux de 2026. Les hypothèses sont indiquées dans chaque cas ; les montants en euros sont arrondis.</p></div>
+    <div class="bx-cass">{arts}</div>
+    <p style="margin-top:26px"><a class="btn btn-red" href="#etude">Faire le calcul pour mon entreprise</a></p>
+  </div>
+</section>
+"""
+
+
 def _slug(t):
     import unicodedata
     t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
@@ -683,7 +714,10 @@ def process(path, slug, mode, versions, made=()):
             parts = [_txt(x) for x in re.findall(r'<span class="(?:s|b|sc|c)\b[^"]*"[^>]*>(.*?)</span>', head.group(1), re.S)]
             label = re.sub(r"\s*→\s*$", "", _txt(go.group(1)))
             pk[0] += 1
-            ico = ill.group(0) if ill else PICTOS[(pk[0] - 1) % len(PICTOS)]
+            key = MS.pick(label)
+            art = MS.P[key] if key else MS.M.get(getattr(CFG, "LOGO", ""), MS.P["document"])
+            pal = dict(D=versions["navy"], A=versions["logo_bg"], Y=versions["accent"], S=versions["sec"], W="#FFFFFF", C="#F3ECDD")
+            ico = f'<svg class="bx-draw" viewBox="0 0 64 64" aria-hidden="true">{art.format(**pal)}</svg>'
             return (f'<a class="poster" href="{m.group(1)}">{ico}<div class="p-head"><span class="b">{_html.escape(label, quote=False)}</span>'
                     f'<span class="sc">{_html.escape(" ".join(parts), quote=False)}</span></div><span class="go">Voir la page</span></a>')
         h = re.sub(r'<a class="poster[^"]*" href="([^"]*)">(.*?)</a>', poster, h, flags=re.S)
@@ -748,7 +782,7 @@ def process(path, slug, mode, versions, made=()):
         if getattr(CFG, "LOGO", "") in MS.M:
             big = logo_svg(versions["logo_bg"], versions["accent"], ' class="bx-cta-ill"', dark=versions["navy"], sec=versions["sec"])
             h = re.sub(r'(<section class="cta-band[^"]*">\s*<div class="wrap">)', lambda m: m.group(1) + big, h, count=1)
-        cb = guides_home_block(made, mode) + cases_block() + situations_block() + arret_block() + compare_block()
+        cb = guides_home_block(made, mode) + cases_block() + concrete_block() + situations_block() + arret_block() + compare_block()
         if cb:
             i = h.rfind('<section class="cta-band')
             if i > 0: h = h[:i] + cb + h[i:]

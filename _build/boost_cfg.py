@@ -12,3 +12,4 @@ TOKENS = {}             # pour forcer une couleur : {"teal": "#0F766E"}
 CASES = []
 LOGO = ''            # dessin du logo (voir boost_mascots.py) ; vide : on garde le logo du site
 GUIDE_PUB = 'des stations de Savoie et de Haute-Savoie'   # public cité dans les guides
+ETAB = 'un hôtel de station'   # type d'entreprise cité dans les cas concrets
