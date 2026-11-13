@@ -206,6 +206,52 @@ def quiz_block():
 """
 
 
+SITUATIONS = [
+    ("Structure de cotisation", "Une équipe jeune, surtout des salariés sans enfant",
+     "Le contrat prévoit une cotisation unique « famille » : tout le monde paie le même prix, que l'on couvre une personne ou cinq. Les salariés seuls paient pour les familles des autres, et l'employeur finance la moitié d'un tarif trop large.",
+     ["Nous comparons trois structures : tarif unique, « isolé / famille » et « adulte / enfant ».", "La part employeur est calée sur la couverture obligatoire du salarié (au moins 50 %).", "Conjoint et enfants deviennent une option, payée par ceux qui en ont besoin."],
+     "Chacun paie pour sa situation réelle, et le budget de l'employeur ne dépend plus de la composition des foyers."),
+    ("Âge moyen de l'équipe", "Une équipe fidèle, dont l'âge moyen augmente",
+     "À chaque échéance, la cotisation monte. L'assureur applique sa grille standard, sans regarder qui compose vraiment l'équipe ni ce qu'elle consomme.",
+     ["Nous présentons aux assureurs la démographie réelle : âge moyen, répartition par âge, ancienneté, familles.", "Nous demandons les comptes de résultats du contrat pour voir les postes vraiment utilisés (optique, dentaire, hospitalisation).", "Nous mettons en concurrence les assureurs qui tarifent le mieux ce profil."],
+     "Le tarif est négocié sur votre équipe, pas sur une moyenne nationale, et les garanties suivent les besoins réels."),
+    ("Gestion multisite", "Trois établissements, trois contrats, trois échéances",
+     "Chaque site a souscrit de son côté. Les garanties diffèrent, un salarié qui change de site change de mutuelle, et personne n'a de vue d'ensemble.",
+     ["Un contrat unique, avec les mêmes garanties partout et un seul interlocuteur.", "Des affiliations centralisées, mais un suivi et une facturation par établissement.", "Un effectif regroupé face aux assureurs, donc plus de poids dans la négociation."],
+     "Une seule gestion au lieu de trois, et des salariés traités de la même façon d'un site à l'autre. Selon que vos sites forment une ou plusieurs sociétés, nous vérifions aussi le seuil de 11 salariés, à partir duquel le forfait social de 8 % s'applique."),
+    ("Entrées et sorties", "Beaucoup de contrats courts, de temps partiels et de départs",
+     "Entre les embauches de la saison, les CDD et les départs, des salariés ne sont ni affiliés ni dispensés par écrit. C'est le premier point que regarde l'URSSAF.",
+     ["Une routine d'embauche : affiliation ou dispense signée dès le premier jour.", "Le versement santé pour les contrats très courts qui y ont droit.", "La portabilité gérée à chaque départ : jusqu'à 12 mois de maintien gratuit pour l'ancien salarié."],
+     "Plus d'oubli à l'entrée ni à la sortie, et un dossier prêt le jour d'un contrôle."),
+    ("Prévoyance des cadres", "Un premier salarié passe cadre",
+     "L'entreprise n'a jamais eu de cadre. Elle ignore qu'elle doit désormais financer seule une prévoyance d'au moins 1,50 % de la tranche A du salaire.",
+     ["Nous mettons en place le contrat de prévoyance cadres, affecté en priorité au risque décès.", "Coût maximal pour un salaire au plafond : 60,08 € par mois et par cadre en 2026 (1,50 % de 4 005 €).", "Nous vérifions au passage la prévoyance des non-cadres prévue par votre convention."],
+     "L'entreprise est à l'abri de la sanction prévue : sans ce contrat, elle peut devoir verser elle-même trois plafonds annuels de la Sécurité sociale, soit 144 180 € en 2026, à la famille du cadre décédé."),
+    ("Prise en charge", "Des salariés mal remboursés en dentaire et en optique",
+     "Le contrat est au minimum légal. Les restes à charge s'accumulent, les salariés se plaignent, et l'employeur ne veut pas doubler son budget.",
+     ["Une base conforme, financée à 50 % au moins par l'employeur.", "Des niveaux supérieurs en option, que chaque salarié choisit et paie selon ses besoins.", "Un service d'explication des remboursements pour les salariés, par WhatsApp."],
+     "De meilleures prises en charge pour ceux qui le souhaitent, sans alourdir la part de l'employeur."),
+]
+
+
+def situations_block():
+    panels = ""
+    for i, (tag, title, pb, acts, res) in enumerate(SITUATIONS):
+        lis = "".join(f"<li>{a}</li>" for a in acts)
+        panels += (f'<article class="bx-sit" data-tag="{tag}"><span class="bx-sit-tag">{tag}</span><h3>{title}</h3>'
+                   f'<div class="bx-sit-cols"><div><strong>La situation</strong><p>{pb}</p></div>'
+                   f'<div><strong>Ce que nous faisons</strong><ul>{lis}</ul></div>'
+                   f'<div class="bx-sit-res"><strong>Ce que ça change</strong><p>{res}</p></div></div>'
+                   f'<a class="btn btn-red bx-sit-go" href="#etude" data-sit="{tag} : {title}">C\'est ma situation, je veux un avis</a></article>')
+    return f"""<section class="band bg-cream" id="situations">
+  <div class="wrap">
+    <div class="sec-head"><span class="t-label">Situations types</span><h2>Six situations fréquentes, et ce qu'un courtier y change</h2><p>Des exemples types, construits à partir des cas que nous rencontrons le plus souvent. Les montants cités sont les chiffres légaux de 2026.</p></div>
+    <div class="bx-sits" data-sits>{panels}</div>
+  </div>
+</section>
+"""
+
+
 def _slug(t):
     import unicodedata
     t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
@@ -312,7 +358,7 @@ def process(path, slug, mode, versions):
         if len(ends) >= 2 and 'id="diagnostic"' not in h:
             k = mi + ends[1]
             h = h[:k] + "\n" + quiz_block() + h[k:]
-        cb = cases_block()
+        cb = cases_block() + situations_block()
         if cb:
             i = h.rfind('<section class="cta-band')
             if i > 0: h = h[:i] + cb + h[i:]

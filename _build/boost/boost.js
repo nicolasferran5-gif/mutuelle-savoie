@@ -88,3 +88,22 @@
     window.addEventListener('scroll', upd, { passive: true }); upd();
   }
 })();
+
+/* ---- boost : situations types en onglets ---- */
+(function () {
+  var box = document.querySelector('[data-sits]'); if (!box) return;
+  var arts = [].slice.call(box.querySelectorAll('.bx-sit')), tabs = document.createElement('div');
+  tabs.className = 'bx-sit-tabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Situations types');
+  function show(k) { arts.forEach(function (a, i) { a.classList.toggle('cur', i === k); tabs.children[i].setAttribute('aria-selected', i === k ? 'true' : 'false'); }); }
+  arts.forEach(function (a, i) {
+    var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = a.dataset.tag;
+    b.addEventListener('click', function () { show(i); }); tabs.appendChild(b);
+  });
+  box.insertBefore(tabs, box.firstChild); box.classList.add('on'); show(0);
+  box.addEventListener('click', function (e) {
+    var go = e.target.closest('.bx-sit-go'); if (!go) return;
+    var form = document.querySelector('#etude form.lead-form'); if (!form) return;
+    var m = form.elements.message; if (!m) { m = document.createElement('input'); m.type = 'hidden'; m.name = 'message'; form.appendChild(m); }
+    m.value = 'Situation type choisie : ' + go.dataset.sit;
+  });
+})();
