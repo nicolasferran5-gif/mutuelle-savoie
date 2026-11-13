@@ -454,3 +454,47 @@ h1,h2,.t-slab,.kpi strong,.rule .num,.proof-band strong,.score strong,.lead-done
 .hero .l1{font-size:clamp(2.6rem,5vw,4rem)!important;line-height:.95!important}
 .hero .wrap{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)!important}
 @media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)!important}}
+.hero .ticket{border:4px solid #fff!important;background:#fff}
+
+/* ============ Version plus sobre : casse normale, aplat unique, moins d'effets ============ */
+.hero{background:var(--hero)!important}
+.hero .wrap{padding-block:64px 210px!important}
+.bx-scene{height:150px;opacity:.92}
+.hero .kicker{background:rgba(255,255,255,.14)!important;border-radius:999px!important;font:600 .9rem/1 var(--f-body)!important;letter-spacing:0!important;padding:9px 15px!important}
+.hero .l1{text-transform:none!important;font-weight:800!important;font-size:clamp(2.5rem,4.6vw,3.7rem)!important;line-height:1!important}
+.hero .l2{font:800 clamp(1.4rem,2.2vw,1.8rem)/1.1 var(--f-slab)!important}
+.hero .l3{font:600 1.15rem/1.3 var(--f-body)!important}
+.hero .ticket{border:0!important}
+.ticket-head{background:#fff!important;color:var(--ink)!important;padding:24px 26px 6px!important}
+.ticket-head strong{color:var(--ink)!important;font-size:1.7rem!important;font-weight:800!important}
+.ticket-head span{color:var(--muted)!important}
+.lead-form legend,.lbl{font:700 .92rem/1.2 var(--f-body)!important;letter-spacing:0!important;text-transform:none!important;color:var(--ink)!important}
+.chip span{border-radius:999px!important;font-weight:500}
+.chip input:checked + span{background:var(--paper2)!important;border-color:var(--brand)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--brand)!important}
+h1,h2,.sec-head h2,.cta-band h2,.prose h2,.bx-sit h3,.bx-q-text{font-weight:800!important}
+.sec-head h2{font-size:clamp(2rem,3.6vw,2.8rem)!important;line-height:1.02!important}
+.rule h3,.cols3 h3,.steps h3,.poster .b,.poster .c,.bx-guide h3,.bx-cas h3,.blog-title,.bx-q-res h3,.photo-card h3{font-family:var(--f-body)!important;font-weight:800!important;font-size:1.14rem!important;line-height:1.25!important;letter-spacing:-.01em!important}
+.t-label,.sec-head .t-label{font:700 .92rem/1.2 var(--f-body)!important;letter-spacing:0!important}
+.rule .tag,.bx-sit-tag,.bx-cas .tag{font:700 .8rem/1 var(--f-body)!important;letter-spacing:0!important;border-radius:999px!important}
+.rule .num{font-size:2.5rem!important;font-weight:800!important}
+.proof-band strong{font-size:1.9rem!important;font-weight:800!important}
+.brand-name{font-size:1.7rem!important}
+.brand-sub{font:500 .76rem/1 var(--f-body)!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important}
+.site-foot .brand-sub{color:rgba(255,255,255,.7)!important}
+.page-hero{padding-bottom:72px!important}
+.page-hero.page-hero::after,.band.bg-navy::before{content:none!important;display:none!important}
+.band.bg-navy{padding-top:96px}
+.page-hero h1,.page-hero h1.kw-h1{text-transform:none!important;font-size:clamp(2.2rem,4.2vw,3.3rem)!important;line-height:1!important}
+.page-hero h1.art-h1{font-size:clamp(2rem,3.8vw,3rem)!important}
+.page-hero .sub,.page-hero .sub.slogan{font:600 clamp(1.1rem,1.8vw,1.3rem)/1.3 var(--f-body)!important}
+.page-hero .ill-photo{border-radius:24px!important;border:0!important}
+.bx-draw{background:var(--paper2)!important;border-radius:20px!important;width:68px!important;height:68px!important}
+.steps li::before{background:var(--paper2)!important;color:var(--brand)!important;font:800 1.2rem/1 var(--f-body)!important;border-radius:14px!important}
+.bg-navy .steps li::before,.bg-teal .steps li::before{background:rgba(255,255,255,.16)!important;color:#fff!important}
+.cta-band h2{text-transform:none!important;font-size:clamp(2rem,3.8vw,2.9rem)!important;line-height:1.02!important}
+.bx-q-text{font-size:clamp(1.4rem,2.4vw,1.8rem)!important;line-height:1.15!important}
+.bx-sit h3{font-size:clamp(1.5rem,2.6vw,2rem)!important;line-height:1.1!important}
+.prose h2{font-size:clamp(1.6rem,2.8vw,2.1rem)!important;line-height:1.08!important}
+.foot-top h3{font:700 .95rem/1 var(--f-body)!important;letter-spacing:0!important;text-transform:none!important}
+.rule,.poster,.bx-cas,.bx-sit,.bx-quiz,.bx-arret,.bx-calc,.bx-check{border-radius:20px!important}
+@media (max-width:860px){.hero .wrap{padding-block:34px 130px!important}.bx-scene{height:110px}.band.bg-navy{padding-top:68px}}

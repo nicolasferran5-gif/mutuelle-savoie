@@ -852,12 +852,21 @@ def process(path, slug, mode, versions, made=()):
             if n.get("@type") == "InsuranceAgency":
                 n.setdefault("identifier", {"@type": "PropertyValue", "propertyID": "ORIAS", "value": "24000251"})
                 n.setdefault("founder", AUTHOR); n.setdefault("areaServed", {"@type": "Country", "name": "France"})
+                n.setdefault("hasOfferCatalog", {"@type": "OfferCatalog", "name": "Services", "itemListElement": [
+                    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": x, "areaServed": "FR", "provider": {"@type": "InsuranceAgency", "name": CFG.BRAND}}}
+                    for x in ("Mutuelle d'entreprise " + CFG.PUBLIC, "Prévoyance collective " + CFG.PUBLIC, "Audit gratuit du contrat en place", "Mutuelle et prévoyance du dirigeant")]})
                 n.setdefault("knowsAbout", ["mutuelle d'entreprise", "prévoyance collective", "protection sociale du dirigeant", CFG.CONVENTION])
         return '<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False) + "</script>"
     h = re.sub(r'<script type="application/ld\+json">(.*?)</script>', fix_ld, h, count=1, flags=re.S)
     extra = []
     if slug == "index":
-        extra.append({"@context": "https://schema.org", "@type": "WebSite", "name": CFG.BRAND, "url": CFG.DOMAIN + "/", "inLanguage": "fr-FR",
+        navm = re.search(r"<nav[^>]*>(.*?)</nav>", h, re.S)
+        links = [(_txt(t), u) for u, t in re.findall(r'<a [^>]*href="([^"#]+)"[^>]*>(.*?)</a>', navm.group(1), re.S)] if navm else []
+        links = [(t, (CFG.DOMAIN + u) if u.startswith("/") else u) for t, u in links if t and u.startswith("/")][:8]
+        if links:
+            extra.append({"@context": "https://schema.org", "@type": "ItemList", "name": "Rubriques principales", "itemListElement": [
+                {"@type": "SiteNavigationElement", "position": i + 1, "name": t, "url": u} for i, (t, u) in enumerate(links)]})
+        extra.append({"@context": "https://schema.org", "@type": "WebSite", "name": CFG.BRAND, "alternateName": CFG.DOMAIN.replace("https://www.", ""), "url": CFG.DOMAIN + "/", "inLanguage": "fr-FR",
                       "publisher": {"@type": "Organization", "name": "WealthWise Conseil", "url": WWC + "/"}})
     else:
         crumbs = [("Accueil", CFG.DOMAIN + "/")]
